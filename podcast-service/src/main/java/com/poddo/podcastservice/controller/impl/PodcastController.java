@@ -29,7 +29,7 @@ public class PodcastController implements IPodcastController {
 
     @GetMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast findById(@PathVariable Long id) {
+    public Podcast findById(@PathVariable String id) {
         return podcastService.findById(id);
     }
 
@@ -41,31 +41,31 @@ public class PodcastController implements IPodcastController {
 
     @PostMapping("/podcasts/{id}/star")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast star(@PathVariable Long id) {
+    public Podcast star(@PathVariable String id) {
         return podcastService.star(id);
     }
 
     @PostMapping("/podcasts/{id}/comment/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast comment(@PathVariable Long id, @PathVariable Long commentId) {
+    public Podcast comment(@PathVariable String id, @PathVariable Long commentId) {
         return podcastService.comment(id, commentId);
     }
 
     @PostMapping("/podcasts/{id}/uncomment/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast uncomment(@PathVariable Long id, @PathVariable Long commentId) {
+    public Podcast uncomment(@PathVariable String id, @PathVariable Long commentId) {
         return podcastService.uncomment(id, commentId);
     }
 
     @PatchMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast update(@PathVariable Long id, @RequestBody Podcast podcast) {
+    public Podcast update(@PathVariable String id, @RequestBody Podcast podcast) {
         return podcastService.update(id, podcast);
     }
 
     @DeleteMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@PathVariable Long id) {
+    public void remove(@PathVariable String id) {
         podcastService.remove(id);
     }
 }

@@ -19,7 +19,7 @@ public class PlaylistService {
         return playlistRepository.findAll();
     }
 
-    public Playlist findById(Long id) {
+    public Playlist findById(String id) {
         return playlistRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Playlist with id "+id+" not found."));
     }
 
@@ -27,21 +27,21 @@ public class PlaylistService {
         return playlistRepository.save(playlist);
     }
 
-    public Playlist addPodcast(Long id, Long podcastId) {
+    public Playlist addPodcast(String id, String podcastId) {
         Playlist playlist = findById(id);
         playlist.addPodcast(podcastService.findById(podcastId));
 
         return playlist;
     }
 
-    public Playlist removePodcast(Long id, Long podcastId) {
+    public Playlist removePodcast(String id, String podcastId) {
         Playlist playlist = findById(id);
         playlist.removePodcast(podcastService.findById(podcastId));
 
         return playlist;
     }
 
-    public Playlist update(Long id, Playlist playlistUpdate) {
+    public Playlist update(String id, Playlist playlistUpdate) {
         Playlist playlist = findById(id);
 
         if (playlistUpdate.getTitle()!=null) playlist.setTitle(playlistUpdate.getTitle());
@@ -50,7 +50,7 @@ public class PlaylistService {
         return playlist;
     }
 
-    public void remove(Long id) {
+    public void remove(String id) {
         playlistRepository.deleteById(id);
     }
 }

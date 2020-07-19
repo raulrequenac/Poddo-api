@@ -22,7 +22,7 @@ public class PlaylistController implements IPlaylistController {
 
     @GetMapping("/playlists/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Playlist findById(@PathVariable Long id) {
+    public Playlist findById(@PathVariable String id) {
         return playlistService.findById(id);
     }
 
@@ -34,25 +34,25 @@ public class PlaylistController implements IPlaylistController {
 
     @PostMapping("/playlists/{id}/add/{podcastId}")
     @ResponseStatus(HttpStatus.OK)
-    public Playlist addPodcast(@PathVariable Long id, @PathVariable Long podcastId) {
+    public Playlist addPodcast(@PathVariable String id, @PathVariable String podcastId) {
         return playlistService.addPodcast(id, podcastId);
     }
 
     @PostMapping("/playlists/{id}/add/{podcastId}")
     @ResponseStatus(HttpStatus.OK)
-    public Playlist removePodcast(@PathVariable Long id, @PathVariable Long podcastId) {
+    public Playlist removePodcast(@PathVariable String id, @PathVariable String podcastId) {
         return playlistService.removePodcast(id, podcastId);
     }
 
     @PatchMapping("/playlists/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Playlist update(@PathVariable Long id, @RequestBody Playlist playlist) {
+    public Playlist update(@PathVariable String id, @RequestBody Playlist playlist) {
         return playlistService.update(id, playlist);
     }
 
     @DeleteMapping("/playlists/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@PathVariable Long id) {
+    public void remove(@PathVariable String id) {
         playlistService.remove(id);
     }
 }

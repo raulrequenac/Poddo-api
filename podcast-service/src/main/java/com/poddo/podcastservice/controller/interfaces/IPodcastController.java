@@ -8,11 +8,11 @@ import java.util.List;
 public interface IPodcastController {
     List<Podcast> findAll();
     List<Podcast> findAllOrderByStarsDesc(String title);
-    Podcast findById(Long id);
+    Podcast findById(String id);
     Podcast create(PodcastDto podcastDto);
-    Podcast star(Long id);
-    Podcast comment(Long id, Long commentId);
-    Podcast uncomment(Long id, Long commentId);
-    Podcast update(Long id, Podcast podcastUpdate);
-    void remove(Long id);
+    Podcast star(String id);
+    Podcast comment(String id, Long commentId);
+    Podcast uncomment(String id, Long commentId);
+    Podcast update(String id, Podcast podcastUpdate);
+    void remove(String id);
 }

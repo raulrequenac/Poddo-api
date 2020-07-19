@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public interface PlaylistRepository extends MongoRepository<Playlist, Long> {
+public interface PlaylistRepository extends MongoRepository<Playlist, String> {
 }

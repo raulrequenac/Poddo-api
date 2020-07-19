@@ -26,7 +26,7 @@ public class PodcastService {
                 podcastRepository.findByTitleLikeOrderByStarsDesc(title);
     }
 
-    public Podcast findById(Long id) {
+    public Podcast findById(String id) {
         return podcastRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("Podcast with id "+id+" not found."));
     }
@@ -38,28 +38,28 @@ public class PodcastService {
         return podcastRepository.save(podcast);
     }
 
-    public Podcast star(Long id) {
+    public Podcast star(String id) {
         Podcast podcast = findById(id);
         podcast.addStar();
 
         return podcastRepository.save(podcast);
     }
 
-    public Podcast comment(Long id, Long commentId) {
+    public Podcast comment(String id, Long commentId) {
         Podcast podcast = findById(id);
         podcast.addComment(commentId);
 
         return podcastRepository.save(podcast);
     }
 
-    public Podcast uncomment(Long id, Long commentId) {
+    public Podcast uncomment(String id, Long commentId) {
         Podcast podcast = findById(id);
         podcast.removeComment(commentId);
 
         return podcastRepository.save(podcast);
     }
 
-    public Podcast update(Long id, Podcast podcastUpdate) {
+    public Podcast update(String id, Podcast podcastUpdate) {
         Podcast podcast = findById(id);
 
         if (podcastUpdate.getTitle()!=null) podcast.setTitle(podcastUpdate.getTitle());
@@ -71,7 +71,7 @@ public class PodcastService {
         return podcastRepository.save(podcast);
     }
 
-    public void remove(Long id) {
+    public void remove(String id) {
         podcastRepository.deleteById(id);
     }
 }

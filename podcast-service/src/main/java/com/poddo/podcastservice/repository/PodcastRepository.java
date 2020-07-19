@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public interface PodcastRepository extends MongoRepository<Podcast, Long> {
+public interface PodcastRepository extends MongoRepository<Podcast, String> {
     List<Podcast> findByTitleLikeOrderByStarsDesc(String title);
     List<Podcast> findAllOrderByStarsDesc();
 }

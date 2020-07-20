@@ -1,11 +1,14 @@
 package com.poddo.podcastservice.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist {
     private String id;
+    @NotNull
     private String title;
+    @NotNull
     private String description;
     private List<Podcast> podcasts;
 

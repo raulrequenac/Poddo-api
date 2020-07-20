@@ -16,9 +16,7 @@ public class Podcast {
     private List<Tags> tags;
     @NotNull
     private String title;
-    @NotNull
     private String description;
-    @NotNull
     private List<Long> comments;
     @NotNull
     private Status status;
@@ -26,7 +24,6 @@ public class Podcast {
     private String audio;
     @NotNull
     private Boolean allowComments;
-    @NotNull
     private LocalDate creationDate;
 
     public Podcast(List<Tags> tags, String title, String description, Status status, String audio, boolean allowComments) {
@@ -39,13 +36,6 @@ public class Podcast {
         this.comments = new ArrayList<>();
         this.stars = (long) 0;
         this.creationDate = LocalDate.now();
-    }
-
-    public Podcast(String title, String description, Status status, Boolean allowComments) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.allowComments = allowComments;
     }
 
     public String getId() {

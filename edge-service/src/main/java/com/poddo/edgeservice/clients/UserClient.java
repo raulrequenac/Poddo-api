@@ -7,13 +7,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "user-service", url = "https://user-service-poddo.herokuapp.com")
+@FeignClient(name = "user-service")//, url = "https://user-service-poddo.herokuapp.com")
 public interface UserClient {
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     List<User> findAll(@RequestParam(value = "username", required = false) String username);
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    User findById(@PathVariable Long id);
+
+    @GetMapping("/users/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     User findByUsername(@PathVariable String username);
 

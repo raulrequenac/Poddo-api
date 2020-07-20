@@ -1,33 +1,29 @@
-package com.poddo.edgeservice.model;
+package com.poddo.edgeservice.viewModel;
 
 import com.poddo.edgeservice.enums.ChannelStatus;
+import com.poddo.edgeservice.model.Playlist;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Channel {
-    @NotNull
+public class ChannelView {
     private Long id;
-    @NotNull
     private String name;
-    @NotNull
     private String logo;
     private ChannelStatus status;
-    @NotNull
     private Long userId;
     private List<Long> subscribers;
-    private List<String> podcasts;
-    private List<String> playlists;
+    private List<PodcastView> podcasts;
+    private List<Playlist> playlists;
 
-    public Channel(Long id, String name, String logo, Long userId) {
+    public ChannelView(Long id, String name, String logo, ChannelStatus status, Long userId, List<Long> subscribers, List<PodcastView> podcasts, List<Playlist> playlists) {
+        this.id = id;
         this.name = name;
         this.logo = logo;
+        this.status = status;
         this.userId = userId;
-        this.status = ChannelStatus.UNLOCKED;
-        this.subscribers = new ArrayList<>();
-        this.podcasts = new ArrayList<>();
-        this.playlists = new ArrayList<>();
+        this.subscribers = subscribers;
+        this.podcasts = podcasts;
+        this.playlists = playlists;
     }
 
     public Long getId() {
@@ -78,19 +74,19 @@ public class Channel {
         this.subscribers = subscribers;
     }
 
-    public List<String> getPodcasts() {
+    public List<PodcastView> getPodcasts() {
         return podcasts;
     }
 
-    public void setPodcasts(List<String> podcasts) {
+    public void setPodcasts(List<PodcastView> podcasts) {
         this.podcasts = podcasts;
     }
 
-    public List<String> getPlaylists() {
+    public List<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(List<String> playlists) {
+    public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
     }
 }

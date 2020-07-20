@@ -10,15 +10,12 @@ import java.util.List;
 @Entity
 public class Channel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String name;
-    @NotNull
     private String logo;
+    @Enumerated(EnumType.STRING)
     private Status status;
-    @NotNull
-    private Long userId;
     @ElementCollection
     private List<Long> subscribers;
     @ElementCollection
@@ -26,11 +23,13 @@ public class Channel {
     @ElementCollection
     private List<String> playlists;
 
-    public Channel(String name, String logo, Long userId) {
+    public Channel() {
+    }
+
+    public Channel(Long id, String name, String logo) {
         this.name = name;
         this.logo = logo;
         this.status = Status.UNLOCKED;
-        this.userId = userId;
         this.subscribers = new ArrayList<>();
         this.podcasts = new ArrayList<>();
         this.playlists = new ArrayList<>();
@@ -70,14 +69,6 @@ public class Channel {
 
     public void unblock() {
         this.status = Status.UNLOCKED;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public List<Long> getSubscribers() {

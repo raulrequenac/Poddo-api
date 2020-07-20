@@ -1,32 +1,26 @@
-package com.poddo.edgeservice.model;
+package com.poddo.edgeservice.viewModel;
 
 import com.poddo.edgeservice.enums.Role;
+import com.poddo.edgeservice.model.Channel;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class UserView {
     private Long id;
-    @NotNull
     private String username;
-    @NotNull
-    private String password;
-    @NotNull
     private Role role;
-    private List<Long> subscriptions;
+    private List<ChannelView> subscriptions;
     private LocalDate createdAt;
+    private ChannelView channel;
 
-    public User() {
-    }
-
-    public User(String username, String password, Role role, Long channelId) {
+    public UserView(Long id, String username, Role role, List<ChannelView> subscriptions, LocalDate createdAt, ChannelView channel) {
+        this.id = id;
         this.username = username;
-        this.password = password;
         this.role = role;
-        this.subscriptions = new ArrayList<>();
-        this.createdAt = LocalDate.now();
+        this.subscriptions = subscriptions;
+        this.createdAt = createdAt;
+        this.channel = channel;
     }
 
     public Long getId() {
@@ -45,14 +39,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -61,11 +47,11 @@ public class User {
         this.role = role;
     }
 
-    public List<Long> getSubscriptions() {
+    public List<ChannelView> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<Long> subscriptions) {
+    public void setSubscriptions(List<ChannelView> subscriptions) {
         this.subscriptions = subscriptions;
     }
 
@@ -75,5 +61,13 @@ public class User {
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public ChannelView getChannel() {
+        return channel;
+    }
+
+    public void setChannel(ChannelView channel) {
+        this.channel = channel;
     }
 }

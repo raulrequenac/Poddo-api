@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "cloudinary-service", url = "https://cloudinary-service-poddo.herokuapp.com")
+@FeignClient(name = "cloudinary-service")//, url = "https://cloudinary-service-poddo.herokuapp.com")
 public interface CloudinaryClient {
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.OK)

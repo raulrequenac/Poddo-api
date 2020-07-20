@@ -1,21 +1,16 @@
 package com.poddo.edgeservice.controller.interfaces;
 
-import com.poddo.edgeservice.dto.ChannelDto;
-import com.poddo.edgeservice.model.Channel;
+import com.poddo.edgeservice.model.Playlist;
+import com.poddo.edgeservice.viewModel.ChannelView;
+import com.poddo.edgeservice.viewModel.PodcastView;
 
 import java.util.List;
 
 public interface IChannelController {
-    List<Channel> findAll(String name);
-    Channel findById(Long id);
-    List<String> getPodcasts(Long id);
-    List<String> getPlaylists(Long id);
-    Channel create(ChannelDto channelDto);
-    Channel block(Long id);
-    Channel unblock(Long id);
-    Channel addPodcast(Long id, String podcastId);
-    Channel removePodcast(Long id, String podcastId);
-    Channel addPlaylist(Long id, String playlistId);
-    Channel removePlaylist(Long id, String playlistId);
-    void remove(Long id);
+    List<ChannelView> findAll(String name);
+    ChannelView findById(Long id);
+    List<PodcastView> getPodcasts(Long id);
+    List<Playlist> getPlaylists(Long id);
+    ChannelView block(Long id);
+    ChannelView unblock(Long id);
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "podcast-service", url = "https://podcast-service-poddo.herokuapp.com")
+@FeignClient(name = "podcast-service")//, url = "https://podcast-service-poddo.herokuapp.com")
 public interface PodcastClient {
     //PODCAST
     @GetMapping("/podcasts")
@@ -65,7 +65,7 @@ public interface PodcastClient {
     @ResponseStatus(HttpStatus.OK)
     Playlist addPodcastToPlaylist(@PathVariable String id, @PathVariable String podcastId);
 
-    @PostMapping("/playlists/{id}/add/{podcastId}")
+    @PostMapping("/playlists/{id}/remove/{podcastId}")
     @ResponseStatus(HttpStatus.OK)
     Playlist removePodcastFromPlaylist(@PathVariable String id, @PathVariable String podcastId);
 

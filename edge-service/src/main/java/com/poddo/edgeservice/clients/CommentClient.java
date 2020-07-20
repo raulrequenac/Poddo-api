@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "channel-service", url = "https://channel-service-poddo.herokuapp.com")
+@FeignClient(name = "comment-service")//, url = "https://channel-service-poddo.herokuapp.com")
 public interface CommentClient {
     @GetMapping("/comments")
     @ResponseStatus(HttpStatus.OK)

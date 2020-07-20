@@ -51,7 +51,7 @@ public class ChannelController implements IChannelController {
         return channelService.block(id);
     }
 
-    @PostMapping("/channels/{id}/block")
+    @PostMapping("/channels/{id}/unblock")
     @ResponseStatus(HttpStatus.OK)
     public Channel unblock(@PathVariable Long id) {
         return channelService.unblock(id);

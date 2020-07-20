@@ -6,6 +6,8 @@ import com.poddo.userservice.exceptions.UsernameAlreadyInUseException;
 import com.poddo.userservice.model.User;
 import com.poddo.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public class UserService {
         if (findByUsername(admin.getUsername())!=null)
             throw new UsernameAlreadyInUseException("The username "+admin.getUsername()+" is already in use.");
 
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         admin.setRole(Role.ADMIN);
 
         return userRepository.save(admin);
@@ -41,6 +45,8 @@ public class UserService {
         if (findByUsername(user.getUsername())!=null)
             throw new UsernameAlreadyInUseException("The username "+user.getUsername()+" is already in use.");
 
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
 
         return userRepository.save(user);

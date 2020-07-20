@@ -1,18 +1,21 @@
 package com.poddo.edgeservice.controller.interfaces;
 
 import com.poddo.edgeservice.dto.PodcastDto;
+import com.poddo.edgeservice.model.Comment;
 import com.poddo.edgeservice.model.Podcast;
+import com.poddo.edgeservice.model.User;
+import com.poddo.edgeservice.viewModel.PodcastView;
 
 import java.util.List;
 
 public interface IPodcastController {
-    List<Podcast> findAll();
-    List<Podcast> findAllOrderByStarsDesc(String title);
-    Podcast findById(String id);
-    Podcast create(PodcastDto podcastDto);
-    Podcast star(String id);
-    Podcast comment(String id, Long commentId);
-    Podcast uncomment(String id, Long commentId);
-    Podcast update(String id, Podcast podcast);
-    void remove(String id);
+    List<PodcastView> findAll();
+    List<PodcastView> findAllOrderByStarsDesc(String title);
+    PodcastView findById(String id);
+    PodcastView create(User auth, PodcastDto podcastDto, String playlistId, Long channelId);
+    PodcastView star(String id);
+    PodcastView comment(String id, Long commentId, Comment comment);
+    PodcastView uncomment(String id, Long commentId);
+    PodcastView update(User auth, String id, Podcast podcast, Long channelId);
+    void remove(User auth, String id, Long channelId);
 }

@@ -38,7 +38,7 @@ public class PlaylistController implements IPlaylistController {
         return playlistService.addPodcast(id, podcastId);
     }
 
-    @PostMapping("/playlists/{id}/add/{podcastId}")
+    @PostMapping("/playlists/{id}/remove/{podcastId}")
     @ResponseStatus(HttpStatus.OK)
     public Playlist removePodcast(@PathVariable String id, @PathVariable String podcastId) {
         return playlistService.removePodcast(id, podcastId);

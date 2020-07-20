@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IUserController {
     List<User> findAll(String username);
+    User findById(Long id);
     User findByUsername(String username);
     User createAdmin(User admin);
     User createUser(User user);

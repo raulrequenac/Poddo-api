@@ -18,6 +18,7 @@ public class User {
     @NotNull
     private String password;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
     @ElementCollection
     private List<Long> subscriptions;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "channel-service", url = "https://channel-service-poddo.herokuapp.com")
+@FeignClient(name = "channel-service")//, url = "https://channel-service-poddo.herokuapp.com")
 public interface ChannelClient {
     @GetMapping("/channels")
     @ResponseStatus(HttpStatus.OK)
@@ -34,7 +34,7 @@ public interface ChannelClient {
     @ResponseStatus(HttpStatus.OK)
     Channel block(@PathVariable Long id);
 
-    @PostMapping("/channels/{id}/block")
+    @PostMapping("/channels/{id}/unblock")
     @ResponseStatus(HttpStatus.OK)
     Channel unblock(@PathVariable Long id);
 

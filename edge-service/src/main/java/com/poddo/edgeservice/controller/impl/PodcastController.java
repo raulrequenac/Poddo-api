@@ -2,10 +2,14 @@ package com.poddo.edgeservice.controller.impl;
 
 import com.poddo.edgeservice.controller.interfaces.IPodcastController;
 import com.poddo.edgeservice.dto.PodcastDto;
+import com.poddo.edgeservice.model.Comment;
 import com.poddo.edgeservice.model.Podcast;
+import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.service.PodcastService;
+import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,55 +21,61 @@ public class PodcastController implements IPodcastController {
 
     @GetMapping("/podcasts")
     @ResponseStatus(HttpStatus.OK)
-    public List<Podcast> findAll() {
+    public List<PodcastView> findAll() {
         return podcastService.findAll();
     }
 
     @GetMapping("/podcasts/stars") //?title=bar
     @ResponseStatus(HttpStatus.OK)
-    public List<Podcast> findAllOrderByStarsDesc(@RequestParam(value = "title", required = false) String title) {
+    public List<PodcastView> findAllOrderByStarsDesc(@RequestParam(value = "title", required = false) String title) {
         return podcastService.findAllOrderByStarsDesc(title);
     }
 
     @GetMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast findById(@PathVariable String id) {
+    public PodcastView findById(@PathVariable String id) {
         return podcastService.findById(id);
     }
 
-    @PostMapping("/podcasts")
+    @PostMapping("/podcasts/{channelId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Podcast create(@RequestBody PodcastDto podcastDto) {
-        return podcastService.create(podcastDto);
+    public PodcastView create(@AuthenticationPrincipal User auth,
+                              @RequestBody PodcastDto podcastDto,
+                              @RequestParam(value = "playlistId", required = false) String playlistId,
+                              @PathVariable Long channelId) {
+        return podcastService.create(auth, podcastDto, playlistId, channelId);
     }
 
     @PostMapping("/podcasts/{id}/star")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast star(@PathVariable String id) {
+    public PodcastView star(@PathVariable String id) {
         return podcastService.star(id);
     }
 
     @PostMapping("/podcasts/{id}/comment/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast comment(@PathVariable String id, @PathVariable Long commentId) {
-        return podcastService.comment(id, commentId);
+    public PodcastView comment(@PathVariable String id, @PathVariable Long commentId, @RequestBody Comment comment) {
+        return podcastService.comment(id, commentId, comment);
     }
 
     @PostMapping("/podcasts/{id}/uncomment/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast uncomment(@PathVariable String id, @PathVariable Long commentId) {
+    public PodcastView uncomment(@PathVariable String id, @PathVariable Long commentId) {
         return podcastService.uncomment(id, commentId);
     }
 
-    @PatchMapping("/podcasts/{id}")
+    @PatchMapping("/podcasts/{id}/to/{channelId}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast update(@PathVariable String id, @RequestBody Podcast podcast) {
-        return podcastService.update(id, podcast);
+    public PodcastView update(@AuthenticationPrincipal User auth,
+                              @PathVariable String id,
+                              @RequestBody Podcast podcast,
+                              @PathVariable Long channelId) {
+        return podcastService.update(auth, id, podcast, channelId);
     }
 
-    @DeleteMapping("/podcasts/{id}")
+    @DeleteMapping("/podcasts/{id}/to/{channelId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@PathVariable String id) {
-        podcastService.remove(id);
+    public void remove(@AuthenticationPrincipal User auth, @PathVariable String id, @PathVariable Long channelId) {
+        podcastService.remove(auth, id, channelId);
     }
 }

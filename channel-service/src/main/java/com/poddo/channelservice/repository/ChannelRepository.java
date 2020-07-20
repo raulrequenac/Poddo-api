@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ChannelRepository extends JpaRepository<Channel, Long> {
-    @Query("SELECT c FROM Channel WHERE c.name LIKE CONCAT('%',:name,'%') ORDER BY COUNT(c.subscribers) DESC")
+    @Query("SELECT c FROM Channel c WHERE c.name LIKE CONCAT('%',:name,'%') ORDER BY COUNT(c.subscribers) DESC")
     List<Channel> findByNameLikeOrderBySubscribersCount(@Param("name") String name);
 }

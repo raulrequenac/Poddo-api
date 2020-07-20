@@ -19,7 +19,13 @@ public class UserController {
         return userService.findAll(username);
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public User findById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+
+    @GetMapping("/users/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public User findByUsername(@PathVariable String username) {
         return userService.findByUsername(username);

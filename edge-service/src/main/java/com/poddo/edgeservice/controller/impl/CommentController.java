@@ -26,12 +26,6 @@ public class CommentController implements ICommentController {
         return commentService.findById(id);
     }
 
-    @PostMapping("/comments")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Comment create(@RequestBody Comment comment) {
-        return commentService.create(comment);
-    }
-
     @PostMapping("/comments/{id}/star")
     @ResponseStatus(HttpStatus.OK)
     public Comment star(@PathVariable Long id) {
@@ -42,11 +36,5 @@ public class CommentController implements ICommentController {
     @ResponseStatus(HttpStatus.OK)
     public Comment update(@PathVariable Long id, @RequestBody Comment comment) {
         return commentService.update(id, comment);
-    }
-
-    @DeleteMapping("/comments/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(Long id) {
-        commentService.remove(id);
     }
 }

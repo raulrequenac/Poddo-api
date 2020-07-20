@@ -37,7 +37,7 @@ public class ChannelService {
 
     public Channel create(ChannelDto channelDto) {
         String logo = cloudinaryService.uploadFile(channelDto.getLogo());
-        Channel channel = new Channel(channelDto.getName(), logo, channelDto.getUserId());
+        Channel channel = new Channel(channelDto.getId(), channelDto.getName(), logo);
         return channelRepository.save(channel);
     }
 

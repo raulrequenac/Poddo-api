@@ -39,4 +39,9 @@ public class GlobalHandler {
     public void handleUsernameNotFoundException(UsernameNotFoundException e, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
     }
+
+    @ExceptionHandler(UploadException.class)
+    public void handleUploadException(UploadException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+    }
 }

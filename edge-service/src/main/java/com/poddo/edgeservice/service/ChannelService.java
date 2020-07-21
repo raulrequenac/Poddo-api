@@ -6,7 +6,6 @@ import com.poddo.edgeservice.dto.ChannelDto;
 import com.poddo.edgeservice.exceptions.ChannelServiceException;
 import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Playlist;
-import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,23 +67,23 @@ public class ChannelService {
     }
 
     @HystrixCommand(fallbackMethod = "addPodcastFallback")
-    public ChannelView addPodcast(Long id, String podcastId) {
-        return convertToView(channelClient.addPodcast(id, podcastId));
+    public void addPodcast(Long id, String podcastId) {
+        convertToView(channelClient.addPodcast(id, podcastId));
     }
 
     @HystrixCommand(fallbackMethod = "removePodcastFallback")
-    public ChannelView removePodcast(Long id, String podcastId) {
-        return convertToView(channelClient.removePodcast(id, podcastId));
+    public void removePodcast(Long id, String podcastId) {
+        convertToView(channelClient.removePodcast(id, podcastId));
     }
 
     @HystrixCommand(fallbackMethod = "addPlaylistFallback")
-    public ChannelView addPlaylist(Long id, String playlistId) {
-        return convertToView(channelClient.addPlaylist(id, playlistId));
+    public void addPlaylist(Long id, String playlistId) {
+        convertToView(channelClient.addPlaylist(id, playlistId));
     }
 
     @HystrixCommand(fallbackMethod = "removePlaylistFallback")
-    public ChannelView removePlaylist(Long id, String playlistId) {
-        return convertToView(channelClient.removePlaylist(id, playlistId));
+    public void removePlaylist(Long id, String playlistId) {
+        convertToView(channelClient.removePlaylist(id, playlistId));
     }
 
     @HystrixCommand(fallbackMethod = "removeFallback")
@@ -127,19 +126,19 @@ public class ChannelService {
         throw new ChannelServiceException("unblock");
     }
 
-    public ChannelView addPodcastFallback(Long id, String podcastId) {
+    public void addPodcastFallback(Long id, String podcastId) {
         throw new ChannelServiceException("addPodcast");
     }
 
-    public ChannelView removePodcastFallback(Long id, String podcastId) {
+    public void removePodcastFallback(Long id, String podcastId) {
         throw new ChannelServiceException("removePodcast");
     }
 
-    public ChannelView addPlaylistFallback(Long id, String playlistId) {
+    public void addPlaylistFallback(Long id, String playlistId) {
         throw new ChannelServiceException("addPlaylist");
     }
 
-    public ChannelView removePlaylistFallback(Long id, String playlistId) {
+    public void removePlaylistFallback(Long id, String playlistId) {
         throw new ChannelServiceException("removePlaylist");
     }
 

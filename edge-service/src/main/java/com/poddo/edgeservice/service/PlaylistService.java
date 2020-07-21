@@ -89,23 +89,23 @@ public class PlaylistService {
         throw new PlaylistServiceException("findById");
     }
 
-    public Playlist createFallback(Playlist playlist) {
+    public Playlist createFallback(User auth, Playlist playlist, Long channelId) {
         throw new PlaylistServiceException("create");
     }
 
-    public Playlist addPodcastFallback(String id, String podcastId) {
+    public Playlist addPodcastFallback(User auth, String id, String podcastId, Long channelId) {
         throw new PlaylistServiceException("addPodcast");
     }
 
-    public Playlist removePodcastFallback(String id, String podcastId) {
+    public Playlist removePodcastFallback(User auth, String id, String podcastId, Long channelId) {
         throw new PlaylistServiceException("removePodcast");
     }
 
-    public Playlist updateFallback(String id, Playlist playlist) {
+    public Playlist updateFallback(User auth, String id, Playlist playlist) {
         throw new PlaylistServiceException("update");
     }
 
-    public void removeFallback(String id) {
+    public void removeFallback(User auth, String id) {
         throw new PlaylistServiceException("remove");
     }
 }

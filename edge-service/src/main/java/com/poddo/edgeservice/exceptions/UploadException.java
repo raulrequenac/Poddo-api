@@ -1,4 +1,4 @@
-package com.poddo.cloudinaryservice.exceptions;
+package com.poddo.edgeservice.exceptions;
 
 public class UploadException extends RuntimeException {
     public UploadException(String message) {

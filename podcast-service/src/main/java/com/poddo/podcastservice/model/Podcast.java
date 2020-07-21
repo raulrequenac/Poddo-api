@@ -23,15 +23,18 @@ public class Podcast {
     @NotNull
     private String audio;
     @NotNull
-    private Boolean allowComments;
+    private boolean allowComments;
     private LocalDate creationDate;
 
-    public Podcast(List<Tags> tags, String title, String description, Status status, String audio, boolean allowComments) {
+    public Podcast() {
+    }
+
+    public Podcast(List<Tags> tags, String title, String description, Status status, boolean allowComments) {
         this.tags = tags;
         this.title = title;
         this.description = description;
         this.status = status;
-        this.audio = audio;
+        this.audio = "";
         this.allowComments = allowComments;
         this.comments = new ArrayList<>();
         this.stars = (long) 0;
@@ -106,7 +109,7 @@ public class Podcast {
         this.audio = audio;
     }
 
-    public Boolean allowsComments() {
+    public boolean allowsComments() {
         return allowComments;
     }
 

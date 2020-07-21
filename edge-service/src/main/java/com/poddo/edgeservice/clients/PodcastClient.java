@@ -6,10 +6,11 @@ import com.poddo.edgeservice.model.Podcast;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@FeignClient(name = "podcast-service")//, url = "https://podcast-service-poddo.herokuapp.com")
+@FeignClient(name = "podcast-service", url = "http://localhost:8081")
 public interface PodcastClient {
     //PODCAST
     @GetMapping("/podcasts")
@@ -42,7 +43,11 @@ public interface PodcastClient {
 
     @PatchMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Podcast updatePodcast(@PathVariable String id, @RequestBody Podcast podcast);
+    Podcast updatePodcast(@PathVariable String id, @RequestBody PodcastDto podcast);
+
+    @PostMapping("/podcasts/{id}/update/{file}")
+    @ResponseStatus(HttpStatus.OK)
+    Podcast updatePodcastAudio(@PathVariable String id, @PathVariable String file);
 
     @DeleteMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

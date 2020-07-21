@@ -24,6 +24,9 @@ public class User {
     private List<Long> subscriptions;
     private LocalDate createdAt;
 
+    public User() {
+    }
+
     public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;

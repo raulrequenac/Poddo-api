@@ -11,15 +11,13 @@ public class PodcastDto {
     private String title;
     private String description;
     private Status status;
-    private MultipartFile file;
-    private boolean allowComments;
+    private Boolean allowComments;
 
-    public PodcastDto(List<Tags> tags, String title, String description, Status status, MultipartFile file, boolean allowComments) {
+    public PodcastDto(List<Tags> tags, String title, String description, Status status, boolean allowComments) {
         this.tags = tags;
         this.title = title;
         this.description = description;
         this.status = status;
-        this.file = file;
         this.allowComments = allowComments;
     }
 
@@ -55,15 +53,7 @@ public class PodcastDto {
         this.status = status;
     }
 
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    public boolean allowsComments() {
+    public Boolean allowsComments() {
         return allowComments;
     }
 

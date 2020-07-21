@@ -1,6 +1,7 @@
 package com.poddo.commentservice.globalHandler;
 
 import com.poddo.commentservice.exceptions.IdNotFoundException;
+import com.poddo.commentservice.exceptions.RespondingAResponseException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -12,5 +13,10 @@ public class GlobalHandler {
     @ExceptionHandler(IdNotFoundException.class)
     public void handleIdNotFoundException(IdNotFoundException e, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(RespondingAResponseException.class)
+    public void handleRespondingAResponseException(RespondingAResponseException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
     }
 }

@@ -5,6 +5,7 @@ import com.poddo.edgeservice.model.Comment;
 import com.poddo.edgeservice.model.Podcast;
 import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.viewModel.PodcastView;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface IPodcastController {
     PodcastView star(String id);
     PodcastView comment(String id, Long commentId, Comment comment);
     PodcastView uncomment(String id, Long commentId);
-    PodcastView update(User auth, String id, Podcast podcast, Long channelId);
+    PodcastView update(User auth, String id, PodcastDto podcast, Long channelId);
     void remove(User auth, String id, Long channelId);
+    PodcastView uploadFile(String id, MultipartFile file);
 }

@@ -1,4 +1,4 @@
-package com.poddo.cloudinaryservice.config;
+package com.poddo.edgeservice.config;
 
 import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;

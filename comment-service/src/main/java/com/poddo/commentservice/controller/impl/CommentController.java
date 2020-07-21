@@ -1,6 +1,7 @@
 package com.poddo.commentservice.controller.impl;
 
 import com.poddo.commentservice.controller.interfaces.ICommentController;
+import com.poddo.commentservice.dto.CommentDto;
 import com.poddo.commentservice.model.Comment;
 import com.poddo.commentservice.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CommentController implements ICommentController {
 
     @PostMapping("/comments")
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment create(@RequestBody Comment comment) {
+    public Comment create(@RequestBody CommentDto comment) {
         return commentService.create(comment);
     }
 

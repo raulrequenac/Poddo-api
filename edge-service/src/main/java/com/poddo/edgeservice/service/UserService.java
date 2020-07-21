@@ -128,7 +128,7 @@ public class UserService implements UserDetailsService, Serializable {
         throw new UserServiceException("findByUsername");
     }
 
-    public UserView createAdminFallback(User user) {
+    public UserView createAdminFallback(User auth, User user) {
         throw new UserServiceException("createAdmin");
     }
 
@@ -136,11 +136,11 @@ public class UserService implements UserDetailsService, Serializable {
         throw new UserServiceException("createUser");
     }
 
-    public UserView updateFallback(Long id, User user) {
+    public UserView updateFallback(User auth, Long id, User user) {
         throw new UserServiceException("update");
     }
 
-    public void removeFallback(Long id) {
+    public void removeFallback(User auth, Long id) {
         throw new UserServiceException("remove");
     }
 }

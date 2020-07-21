@@ -10,9 +10,10 @@ public interface IPodcastController {
     List<Podcast> findAllOrderByStarsDesc(String title);
     Podcast findById(String id);
     Podcast create(PodcastDto podcastDto);
+    Podcast updatePodcastAudio(String id, String file);
     Podcast star(String id);
     Podcast comment(String id, Long commentId);
     Podcast uncomment(String id, Long commentId);
-    Podcast update(String id, Podcast podcastUpdate);
+    Podcast update(String id, PodcastDto podcastUpdate);
     void remove(String id);
 }

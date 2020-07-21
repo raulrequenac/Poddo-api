@@ -13,8 +13,6 @@ import java.util.List;
 public class PodcastService {
     @Autowired
     private PodcastRepository podcastRepository;
-    @Autowired
-    private CloudinaryService cloudinaryService;
 
     public List<Podcast> findAll() {
         return podcastRepository.findAll();
@@ -32,8 +30,15 @@ public class PodcastService {
     }
 
     public Podcast create(PodcastDto podcastDto) {
-        String audio = cloudinaryService.uploadFile(podcastDto.getFile());
-        Podcast podcast = new Podcast(podcastDto.getTags(), podcastDto.getTitle(), podcastDto.getDescription(), podcastDto.getStatus(), audio, podcastDto.allowsComments());
+
+        Podcast podcast = new Podcast(podcastDto.getTags(), podcastDto.getTitle(), podcastDto.getDescription(), podcastDto.getStatus(), podcastDto.allowsComments());
+
+        return podcastRepository.save(podcast);
+    }
+
+    public Podcast updatePodcastAudio(String id, String file) {
+        Podcast podcast = findById(id);
+        podcast.setAudio(file);
 
         return podcastRepository.save(podcast);
     }
@@ -59,14 +64,14 @@ public class PodcastService {
         return podcastRepository.save(podcast);
     }
 
-    public Podcast update(String id, Podcast podcastUpdate) {
+    public Podcast update(String id, PodcastDto podcastDto) {
         Podcast podcast = findById(id);
 
-        if (podcastUpdate.getTitle()!=null) podcast.setTitle(podcastUpdate.getTitle());
-        if (podcastUpdate.getTags()!=null)  podcast.setTags(podcastUpdate.getTags());
-        if (podcastUpdate.getDescription()!=null) podcast.setDescription(podcastUpdate.getDescription());
-        if (podcastUpdate.getStatus()!=null) podcast.setStatus(podcastUpdate.getStatus());
-        if (podcastUpdate.allowsComments()!=null) podcast.setStatus(podcastUpdate.getStatus());
+        if (podcastDto.getTitle()!=null) podcast.setTitle(podcastDto.getTitle());
+        if (podcastDto.getTags()!=null)  podcast.setTags(podcastDto.getTags());
+        if (podcastDto.getDescription()!=null) podcast.setDescription(podcastDto.getDescription());
+        if (podcastDto.getStatus()!=null) podcast.setStatus(podcastDto.getStatus());
+        if (podcastDto.allowsComments()!=null) podcast.setStatus(podcastDto.getStatus());
 
         return podcastRepository.save(podcast);
     }

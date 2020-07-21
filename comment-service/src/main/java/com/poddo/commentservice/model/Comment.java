@@ -25,22 +25,16 @@ public class Comment {
     @OneToMany(mappedBy = "responseTo")
     private List<Comment> responses;
 
+    public Comment() {
+    }
+
     public Comment(Long userId, String text, Comment responseTo) {
         this.userId = userId;
         this.text = text;
         this.stars = (long) 0;
         this.responseTo = responseTo;
         this.createdAt = LocalDateTime.now();
-        this.responses = null;
-    }
-
-    public Comment(Long userId, String text) {
-        this.userId = userId;
-        this.text = text;
-        this.stars = (long) 0;
-        this.responseTo = null;
-        this.createdAt = LocalDateTime.now();
-        this.responses = new ArrayList<>();
+        this.responses = responseTo == null ? new ArrayList<>() : null;
     }
 
     public Long getId() {

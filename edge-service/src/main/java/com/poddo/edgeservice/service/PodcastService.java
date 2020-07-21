@@ -14,6 +14,7 @@ import com.poddo.edgeservice.viewModel.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class PodcastService {
     private UserService userService;
     @Autowired
     private PlaylistService playlistService;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public List<PodcastView> findAll() {
@@ -82,7 +85,7 @@ public class PodcastService {
     }
 
     @HystrixCommand(fallbackMethod = "updateFallback")
-    public PodcastView update(User auth, String id, Podcast podcast, Long channelId) {
+    public PodcastView update(User auth, String id, PodcastDto podcast, Long channelId) {
         UserView u = userService.findByUsername(auth.getUsername());
         ChannelView channel = channelService.findById(channelId);
 
@@ -111,6 +114,13 @@ public class PodcastService {
         }));
         channelService.removePodcast(channel.getId(), id);
         podcastClient.removePodcast(id);
+    }
+
+    @HystrixCommand(fallbackMethod = "uploadFileFallback")
+    public PodcastView uploadFile(String id, MultipartFile file) {
+        String url = cloudinaryService.uploadFile(file);
+
+        return convertToView(podcastClient.updatePodcastAudio(id, url));
     }
 
     public PodcastView convertToView(Podcast podcast) {
@@ -148,7 +158,7 @@ public class PodcastService {
         throw new PodcastServiceException("findById");
     }
 
-    public PodcastView createFallback(PodcastDto podcastDto) {
+    public PodcastView createFallback(User auth, PodcastDto podcastDto, String playlistId, Long channelId) {
         throw new PodcastServiceException("create");
     }
 
@@ -156,7 +166,7 @@ public class PodcastService {
         throw new PodcastServiceException("star");
     }
 
-    public PodcastView commentFallback(String id, Long commentId) {
+    public PodcastView commentFallback(String id, Long commentId, Comment comment) {
         throw new PodcastServiceException("comment");
     }
 
@@ -164,11 +174,15 @@ public class PodcastService {
         throw new PodcastServiceException("uncomment");
     }
 
-    public PodcastView updateFallback(String id, Podcast podcast) {
+    public PodcastView updateFallback(User auth, String id, PodcastDto podcast, Long channelId) {
         throw new PodcastServiceException("update");
     }
 
-    public void removeFallback(String id) {
+    public void removeFallback(User auth, String id, Long channelId) {
         throw new PodcastServiceException("remove");
+    }
+
+    public PodcastView uploadFileFallback(String id, MultipartFile file) {
+        throw new PodcastServiceException("uploadFile");
     }
 }

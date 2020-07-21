@@ -46,10 +46,9 @@ public class UserService {
             throw new UsernameAlreadyInUseException("The username "+user.getUsername()+" is already in use.");
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
+        String password = passwordEncoder.encode(user.getPassword());
 
-        return userRepository.save(user);
+        return userRepository.save(new User(user.getUsername(), password, Role.USER));
     }
 
     public User update(Long id, User userUpdate) {

@@ -1,7 +1,6 @@
 package com.poddo.edgeservice.controller.impl;
 
 import com.poddo.edgeservice.controller.interfaces.IChannelController;
-import com.poddo.edgeservice.dto.ChannelUserDto;
 import com.poddo.edgeservice.model.Playlist;
 import com.poddo.edgeservice.service.ChannelService;
 import com.poddo.edgeservice.viewModel.ChannelView;

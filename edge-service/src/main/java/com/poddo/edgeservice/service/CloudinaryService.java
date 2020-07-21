@@ -1,8 +1,10 @@
-package com.poddo.cloudinaryservice.service;
+package com.poddo.edgeservice.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.poddo.cloudinaryservice.exceptions.UploadException;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.poddo.edgeservice.exceptions.UploadException;
+import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,19 +21,13 @@ public class CloudinaryService {
 
     public String uploadFile(MultipartFile file) {
         try {
-            File uploadedFile = convertMultiPartToFile(file);
-            Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+            String base64 = Base64.toBase64String(file.getBytes());
+            String convFile = "data:audio/mpeg;base64,"+base64;
+            Map uploadResult = cloudinaryConfig.uploader()
+                    .upload(convFile, ObjectUtils.asMap("resource_type", "auto"));
             return  uploadResult.get("url").toString();
         } catch (Exception e) {
             throw new UploadException("The audio could not be uploaded.");
         }
-    }
-
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
     }
 }

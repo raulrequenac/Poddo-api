@@ -6,8 +6,11 @@ import com.poddo.podcastservice.model.Podcast;
 import com.poddo.podcastservice.service.PodcastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,10 +36,16 @@ public class PodcastController implements IPodcastController {
         return podcastService.findById(id);
     }
 
-    @PostMapping("/podcasts")
+    @PostMapping(value = "/podcasts")
     @ResponseStatus(HttpStatus.CREATED)
-    public Podcast create(@RequestBody PodcastDto podcastDto) {
+    public Podcast create(@RequestParam PodcastDto podcastDto) {
         return podcastService.create(podcastDto);
+    }
+
+    @PostMapping("/podcasts/{id}/update/{file}")
+    @ResponseStatus(HttpStatus.OK)
+    public Podcast updatePodcastAudio(@PathVariable String id, @PathVariable String file) {
+        return podcastService.updatePodcastAudio(id, file);
     }
 
     @PostMapping("/podcasts/{id}/star")
@@ -59,7 +68,7 @@ public class PodcastController implements IPodcastController {
 
     @PatchMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast update(@PathVariable String id, @RequestBody Podcast podcast) {
+    public Podcast update(@PathVariable String id, @RequestBody PodcastDto podcast) {
         return podcastService.update(id, podcast);
     }
 

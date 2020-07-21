@@ -9,8 +9,10 @@ import com.poddo.edgeservice.service.PodcastService;
 import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -68,7 +70,7 @@ public class PodcastController implements IPodcastController {
     @ResponseStatus(HttpStatus.OK)
     public PodcastView update(@AuthenticationPrincipal User auth,
                               @PathVariable String id,
-                              @RequestBody Podcast podcast,
+                              @RequestBody PodcastDto podcast,
                               @PathVariable Long channelId) {
         return podcastService.update(auth, id, podcast, channelId);
     }
@@ -77,5 +79,11 @@ public class PodcastController implements IPodcastController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@AuthenticationPrincipal User auth, @PathVariable String id, @PathVariable Long channelId) {
         podcastService.remove(auth, id, channelId);
+    }
+
+    @PostMapping(value = "/podcasts/{id}/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public PodcastView uploadFile(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+        return podcastService.uploadFile(id, file);
     }
 }

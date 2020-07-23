@@ -29,6 +29,12 @@ public class UserController implements IUserController {
         return userService.findByUsername(username);
     }
 
+    @GetMapping("/users/is-user")
+    @ResponseStatus(HttpStatus.OK)
+    public UserView isUser(@AuthenticationPrincipal User user) {
+        return userService.isUser(user);
+    }
+
     @PostMapping("/users/admin")
     @ResponseStatus(HttpStatus.CREATED)
     public UserView createAdmin(@AuthenticationPrincipal User auth, @RequestBody User user) {

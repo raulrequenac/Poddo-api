@@ -41,7 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/channels/{id}/block").hasAnyAuthority("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/channels/{id}/unblock").hasAnyAuthority("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/users/admin").hasAnyAuthority("ADMIN")
-                .mvcMatchers("/**").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().permitAll();
     }
 

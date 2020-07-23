@@ -26,9 +26,9 @@ public class Channel {
     public Channel() {
     }
 
-    public Channel(Long id, String name, String logo) {
+    public Channel(Long id, String name) {
+        this.id = id;
         this.name = name;
-        this.logo = logo;
         this.status = Status.UNLOCKED;
         this.subscribers = new ArrayList<>();
         this.podcasts = new ArrayList<>();

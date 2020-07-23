@@ -2,7 +2,6 @@ package com.poddo.edgeservice.dto;
 
 import com.poddo.edgeservice.enums.PodcastStatus;
 import com.poddo.edgeservice.enums.Tags;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

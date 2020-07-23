@@ -5,6 +5,7 @@ import com.poddo.edgeservice.clients.PodcastClient;
 import com.poddo.edgeservice.dto.PodcastDto;
 import com.poddo.edgeservice.enums.Role;
 import com.poddo.edgeservice.exceptions.PodcastServiceException;
+import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Comment;
 import com.poddo.edgeservice.model.Podcast;
 import com.poddo.edgeservice.model.User;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +59,7 @@ public class PodcastService {
     @HystrixCommand(fallbackMethod = "createFallback")
     public PodcastView create(User auth, PodcastDto podcastDto, String playlistId, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
-        if (!user.getChannel().getId().equals(channelId)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!channelId.equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         PodcastView podcast = convertToView(podcastClient.createPodcast(podcastDto));
         channelService.addPodcast(channelId, podcast.getId());
@@ -118,7 +120,7 @@ public class PodcastService {
 
     @HystrixCommand(fallbackMethod = "uploadFileFallback")
     public PodcastView uploadFile(String id, MultipartFile file) {
-        String url = cloudinaryService.uploadFile(file);
+        String url = cloudinaryService.uploadFile(file, "audio/mpeg");
 
         return convertToView(podcastClient.updatePodcastAudio(id, url));
     }

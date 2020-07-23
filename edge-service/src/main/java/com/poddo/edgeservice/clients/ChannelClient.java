@@ -1,6 +1,5 @@
 package com.poddo.edgeservice.clients;
 
-import com.poddo.edgeservice.dto.ChannelDto;
 import com.poddo.edgeservice.model.Channel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public interface ChannelClient {
 
     @PostMapping("/channels")
     @ResponseStatus(HttpStatus.CREATED)
-    Channel create(@RequestBody ChannelDto channelDto);
+    Channel create(@RequestBody Channel channel);
 
     @PostMapping("/channels/{id}/block")
     @ResponseStatus(HttpStatus.OK)
@@ -57,4 +56,8 @@ public interface ChannelClient {
     @DeleteMapping("/channels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void remove(@PathVariable Long id);
+
+    @PostMapping("/channels/{id}/update")
+    @ResponseStatus(HttpStatus.OK)
+    Channel updateLogo(@PathVariable Long id, @RequestBody String file);
 }

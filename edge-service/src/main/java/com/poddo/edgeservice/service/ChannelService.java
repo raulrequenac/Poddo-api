@@ -2,7 +2,6 @@ package com.poddo.edgeservice.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.poddo.edgeservice.clients.ChannelClient;
-import com.poddo.edgeservice.dto.ChannelDto;
 import com.poddo.edgeservice.exceptions.ChannelServiceException;
 import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Playlist;
@@ -10,6 +9,7 @@ import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +24,8 @@ public class ChannelService {
     private PlaylistService playlistService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public List<ChannelView> findAll(String name) {
@@ -51,9 +53,9 @@ public class ChannelService {
                 .collect(Collectors.toList());
     }
 
-    @HystrixCommand(fallbackMethod = "createFallback")
-    public ChannelView create(ChannelDto channelDto) {
-        return convertToView(channelClient.create(channelDto));
+    //@HystrixCommand(fallbackMethod = "createFallback")
+    public ChannelView create(Channel channel) {
+        return convertToView(channelClient.create(channel));
     }
 
     @HystrixCommand(fallbackMethod = "blockFallback")
@@ -91,11 +93,18 @@ public class ChannelService {
         channelClient.remove(id);
     }
 
+    @HystrixCommand(fallbackMethod = "updateLogoFallback")
+    public ChannelView updateLogo(Long id, MultipartFile file) {
+        String url = cloudinaryService.uploadFile(file, "image/jpeg");
+
+        return convertToView(channelClient.updateLogo(id, url));
+    }
+
     public ChannelView convertToView(Channel channel) {
         List<PodcastView> podcasts = channel.getPodcasts().stream().map(podcastId -> podcastService.findById(podcastId)).collect(Collectors.toList());
         List<Playlist> playlists = channel.getPlaylists().stream().map(playlistId -> playlistService.findById(playlistId)).collect(Collectors.toList());
 
-        return new ChannelView(channel.getId(), channel.getName(), channel.getLogo(), channel.getStatus(), channel.getUserId(), channel.getSubscribers(), podcasts, playlists);
+        return new ChannelView(channel.getId(), channel.getName(), channel.getLogo(), channel.getStatus(), channel.getSubscribers(), podcasts, playlists);
     }
 
     public List<ChannelView> findAllFallback(String name) {
@@ -114,7 +123,7 @@ public class ChannelService {
         throw new ChannelServiceException("getPlaylists");
     }
 
-    public ChannelView createFallback(ChannelDto channelDto) {
+    public ChannelView createFallback(Channel channel) {
         throw new ChannelServiceException("create");
     }
 
@@ -144,5 +153,9 @@ public class ChannelService {
 
     public void removeFallback(Long id) {
         throw new ChannelServiceException("remove");
+    }
+
+    public ChannelView updateLogoFallback(Long id, MultipartFile file) {
+        throw new ChannelServiceException("updateLogo");
     }
 }

@@ -1,7 +1,6 @@
 package com.poddo.channelservice.controller.impl;
 
 import com.poddo.channelservice.controller.interfaces.IChannelController;
-import com.poddo.channelservice.dto.ChannelDto;
 import com.poddo.channelservice.model.Channel;
 import com.poddo.channelservice.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +40,8 @@ public class ChannelController implements IChannelController {
 
     @PostMapping("/channels")
     @ResponseStatus(HttpStatus.CREATED)
-    public Channel create(@RequestBody ChannelDto channelDto) {
-        return channelService.create(channelDto);
+    public Channel create(@RequestBody Channel channel) {
+        return channelService.create(channel);
     }
 
     @PostMapping("/channels/{id}/block")
@@ -85,5 +84,11 @@ public class ChannelController implements IChannelController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable Long id) {
         channelService.remove(id);
+    }
+
+    @PostMapping("/channels/{id}/update")
+    @ResponseStatus(HttpStatus.OK)
+    public Channel updateLogo(@PathVariable Long id, @RequestBody String file) {
+        return channelService.updateLogo(id, file);
     }
 }

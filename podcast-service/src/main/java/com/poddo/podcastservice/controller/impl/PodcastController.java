@@ -38,13 +38,13 @@ public class PodcastController implements IPodcastController {
 
     @PostMapping(value = "/podcasts")
     @ResponseStatus(HttpStatus.CREATED)
-    public Podcast create(@RequestParam PodcastDto podcastDto) {
+    public Podcast create(@RequestBody PodcastDto podcastDto) {
         return podcastService.create(podcastDto);
     }
 
-    @PostMapping("/podcasts/{id}/update/{file}")
+    @PostMapping("/podcasts/{id}/update")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast updatePodcastAudio(@PathVariable String id, @PathVariable String file) {
+    public Podcast updatePodcastAudio(@PathVariable String id, @RequestBody String file) {
         return podcastService.updatePodcastAudio(id, file);
     }
 

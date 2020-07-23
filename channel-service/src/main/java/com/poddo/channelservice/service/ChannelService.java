@@ -1,6 +1,5 @@
 package com.poddo.channelservice.service;
 
-import com.poddo.channelservice.dto.ChannelDto;
 import com.poddo.channelservice.exceptions.IdNotFoundException;
 import com.poddo.channelservice.model.Channel;
 import com.poddo.channelservice.repository.ChannelRepository;
@@ -13,8 +12,6 @@ import java.util.List;
 public class ChannelService {
     @Autowired
     private ChannelRepository channelRepository;
-    @Autowired
-    private CloudinaryService cloudinaryService;
 
     public List<Channel> findAll(String name) {
         return name==null ? channelRepository.findAll() : channelRepository.findByNameLikeOrderBySubscribersCount(name);
@@ -35,10 +32,11 @@ public class ChannelService {
         return channel.getPlaylists();
     }
 
-    public Channel create(ChannelDto channelDto) {
-        String logo = cloudinaryService.uploadFile(channelDto.getLogo());
-        Channel channel = new Channel(channelDto.getId(), channelDto.getName(), logo);
-        return channelRepository.save(channel);
+    public Channel create(Channel channel) {
+        System.out.println(channel.getId());
+        Channel c = new Channel(channel.getId(), channel.getName());
+        System.out.println(c.getId());
+        return channelRepository.save(c);
     }
 
     public Channel block(Long id) {
@@ -79,5 +77,12 @@ public class ChannelService {
 
     public void remove(Long id) {
         channelRepository.deleteById(id);
+    }
+
+    public Channel updateLogo(Long id, String file) {
+        Channel channel = findById(id);
+        channel.setLogo(file);
+
+        return channelRepository.save(channel);
     }
 }

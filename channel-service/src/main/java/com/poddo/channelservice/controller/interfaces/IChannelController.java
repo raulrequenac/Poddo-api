@@ -1,6 +1,5 @@
 package com.poddo.channelservice.controller.interfaces;
 
-import com.poddo.channelservice.dto.ChannelDto;
 import com.poddo.channelservice.model.Channel;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public interface IChannelController {
     Channel findById(Long id);
     List<String> getPodcasts(Long id);
     List<String> getPlaylists(Long id);
-    Channel create(ChannelDto channelDto);
+    Channel create(Channel channel);
     Channel block(Long id);
     Channel unblock(Long id);
     Channel addPodcast(Long id, String podcastId);
@@ -18,4 +17,5 @@ public interface IChannelController {
     Channel addPlaylist(Long id, String playlistId);
     Channel removePlaylist(Long id, String playlistId);
     void remove(Long id);
+    Channel updateLogo(Long id, String file);
 }

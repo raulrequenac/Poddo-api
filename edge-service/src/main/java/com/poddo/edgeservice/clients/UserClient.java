@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "user-service")//, url = "https://user-service-poddo.herokuapp.com")
+@FeignClient(name = "user-service", url = "http://localhost:8083")
 public interface UserClient {
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)

@@ -19,10 +19,10 @@ public class CloudinaryService {
     @Autowired
     private Cloudinary cloudinaryConfig;
 
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file, String type) {
         try {
             String base64 = Base64.toBase64String(file.getBytes());
-            String convFile = "data:audio/mpeg;base64,"+base64;
+            String convFile = "data:"+type+";base64,"+base64;
             Map uploadResult = cloudinaryConfig.uploader()
                     .upload(convFile, ObjectUtils.asMap("resource_type", "auto"));
             return  uploadResult.get("url").toString();

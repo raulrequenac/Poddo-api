@@ -2,10 +2,10 @@ package com.poddo.edgeservice.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.poddo.edgeservice.clients.UserClient;
-import com.poddo.edgeservice.dto.ChannelDto;
 import com.poddo.edgeservice.dto.ChannelUserDto;
 import com.poddo.edgeservice.enums.Role;
 import com.poddo.edgeservice.exceptions.UserServiceException;
+import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Playlist;
 import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.security.CustomSecurityUser;
@@ -60,6 +60,12 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(userClient.findByUsername(username));
     }
 
+    public UserView isUser(User user) {
+        User u = userClient.findByUsername(user.getUsername());
+        if (u==null || !u.getPassword().equals(user.getPassword())) return null;
+        return convertToView(u);
+    }
+
     @HystrixCommand(fallbackMethod = "createAdminFallback")
     public UserView createAdmin(User auth, User user) {
         if (!auth.getRole().equals(Role.ADMIN)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -67,10 +73,10 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(userClient.createAdmin(user));
     }
 
-    @HystrixCommand(fallbackMethod = "createUserFallback")
+    //@HystrixCommand(fallbackMethod = "createUserFallback")
     public UserView createUser(ChannelUserDto channelUserDto) {
-        User user = userClient.createUser(new User(channelUserDto.getUsername(), channelUserDto.getPassword(), Role.USER, null));
-        channelService.create(new ChannelDto(user.getId(), channelUserDto.getName(), channelUserDto.getLogo()));
+        User user = userClient.createUser(new User(channelUserDto.getUsername(), channelUserDto.getPassword(), Role.USER));
+        channelService.create(new Channel(user.getId(), channelUserDto.getName()));
 
         return convertToView(user);
     }
@@ -132,7 +138,7 @@ public class UserService implements UserDetailsService, Serializable {
         throw new UserServiceException("createAdmin");
     }
 
-    public UserView createUserFallback(User user) {
+    public UserView createUserFallback(ChannelUserDto channelUserDto) {
         throw new UserServiceException("createUser");
     }
 

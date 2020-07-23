@@ -1,0 +1,1 @@
+INSERT INTO channel(id, logo, name, status) VALUES (1, null, 'LoboTheDog', 'UNLOCKED');

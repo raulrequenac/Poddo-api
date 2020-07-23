@@ -45,9 +45,9 @@ public interface PodcastClient {
     @ResponseStatus(HttpStatus.OK)
     Podcast updatePodcast(@PathVariable String id, @RequestBody PodcastDto podcast);
 
-    @PostMapping("/podcasts/{id}/update/{file}")
+    @PostMapping("/podcasts/{id}/update")
     @ResponseStatus(HttpStatus.OK)
-    Podcast updatePodcastAudio(@PathVariable String id, @PathVariable String file);
+    Podcast updatePodcastAudio(@PathVariable String id, @RequestBody String file);
 
     @DeleteMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -80,6 +80,18 @@ public class ChannelController implements IChannelController {
         return channelService.removePlaylist(id, playlistId);
     }
 
+    @PostMapping("/channels/{id}/add/subscriber")
+    @ResponseStatus(HttpStatus.OK)
+    public Channel addSubscriber(@PathVariable Long id) {
+        return channelService.addSubscriber(id);
+    }
+
+    @PostMapping("/channels/{id}/remove/subscriber")
+    @ResponseStatus(HttpStatus.OK)
+    public Channel removeSubscriber(@PathVariable Long id) {
+        return channelService.removeSubscriber(id);
+    }
+
     @DeleteMapping("/channels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable Long id) {

@@ -85,4 +85,18 @@ public class ChannelService {
 
         return channelRepository.save(channel);
     }
+
+    public Channel addSubscriber(Long id) {
+        Channel channel = findById(id);
+        channel.addSubscriber();
+
+        return channelRepository.save(channel);
+    }
+
+    public Channel removeSubscriber(Long id) {
+        Channel channel = findById(id);
+        channel.removeSubscriber();
+
+        return channelRepository.save(channel);
+    }
 }

@@ -13,7 +13,7 @@ public class Channel {
     private String name;
     private String logo;
     private ChannelStatus status;
-    private List<Long> subscribers;
+    private Long subscribers;
     private List<String> podcasts;
     private List<String> playlists;
 
@@ -24,7 +24,7 @@ public class Channel {
         this.id = id;
         this.name = name;
         this.status = ChannelStatus.UNLOCKED;
-        this.subscribers = new ArrayList<>();
+        this.subscribers = (long) 0;
         this.podcasts = new ArrayList<>();
         this.playlists = new ArrayList<>();
     }
@@ -61,11 +61,11 @@ public class Channel {
         this.status = status;
     }
 
-    public List<Long> getSubscribers() {
+    public Long getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<Long> subscribers) {
+    public void setSubscribers(Long subscribers) {
         this.subscribers = subscribers;
     }
 

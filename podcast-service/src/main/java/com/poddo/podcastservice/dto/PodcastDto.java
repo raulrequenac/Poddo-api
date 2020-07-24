@@ -11,7 +11,7 @@ public class PodcastDto {
     private String title;
     private String description;
     private Status status;
-    private Boolean allowComments;
+    private boolean allowComments;
     private Long channelId;
 
     public PodcastDto(List<Tags> tags, String title, String description, Status status, boolean allowComments, Long channelId) {
@@ -55,7 +55,7 @@ public class PodcastDto {
         this.status = status;
     }
 
-    public Boolean allowsComments() {
+    public boolean isAllowComments() {
         return allowComments;
     }
 

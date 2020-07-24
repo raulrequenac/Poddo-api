@@ -10,11 +10,11 @@ public class ChannelView {
     private String name;
     private String logo;
     private ChannelStatus status;
-    private List<Long> subscribers;
+    private Long subscribers;
     private List<PodcastView> podcasts;
     private List<Playlist> playlists;
 
-    public ChannelView(Long id, String name, String logo, ChannelStatus status, List<Long> subscribers, List<PodcastView> podcasts, List<Playlist> playlists) {
+    public ChannelView(Long id, String name, String logo, ChannelStatus status, Long subscribers, List<PodcastView> podcasts, List<Playlist> playlists) {
         this.id = id;
         this.name = name;
         this.logo = logo;
@@ -56,11 +56,11 @@ public class ChannelView {
         this.status = status;
     }
 
-    public List<Long> getSubscribers() {
+    public Long getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<Long> subscribers) {
+    public void setSubscribers(Long subscribers) {
         this.subscribers = subscribers;
     }
 

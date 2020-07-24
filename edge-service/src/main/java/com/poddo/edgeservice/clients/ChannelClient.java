@@ -53,6 +53,14 @@ public interface ChannelClient {
     @ResponseStatus(HttpStatus.OK)
     Channel removePlaylist(@PathVariable Long id, @PathVariable String playlistId);
 
+    @PostMapping("/channels/{id}/add/subscriber")
+    @ResponseStatus(HttpStatus.OK)
+    public Channel addSubscriber(@PathVariable Long id);
+
+    @PostMapping("/channels/{id}/remove/subscriber")
+    @ResponseStatus(HttpStatus.OK)
+    public Channel removeSubscriber(@PathVariable Long id);
+
     @DeleteMapping("/channels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void remove(@PathVariable Long id);

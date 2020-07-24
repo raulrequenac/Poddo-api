@@ -10,6 +10,8 @@ public interface IUserController {
     User findByUsername(String username);
     User createAdmin(User admin);
     User createUser(User user);
+    User subscribe(Long id, Long channelId);
+    User unsubscribe(Long id, Long channelId);
     User update(Long id, User userUpdate);
     void remove(Long id);
 }

@@ -37,7 +37,7 @@ public class PodcastService {
                 podcastDto.getTitle(),
                 podcastDto.getDescription(),
                 podcastDto.getStatus(),
-                podcastDto.allowsComments(),
+                podcastDto.isAllowComments(),
                 podcastDto.getChannelId()
         );
 
@@ -79,7 +79,7 @@ public class PodcastService {
         if (podcastDto.getTags()!=null)  podcast.setTags(podcastDto.getTags());
         if (podcastDto.getDescription()!=null) podcast.setDescription(podcastDto.getDescription());
         if (podcastDto.getStatus()!=null) podcast.setStatus(podcastDto.getStatus());
-        if (podcastDto.allowsComments()!=null) podcast.setAllowComments(podcastDto.allowsComments());
+        podcast.setAllowComments(podcastDto.isAllowComments());
 
         return podcastRepository.save(podcast);
     }

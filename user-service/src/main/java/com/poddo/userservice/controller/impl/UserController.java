@@ -43,6 +43,18 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @PostMapping("/users/{id}/subscribe/{channelId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User subscribe(@PathVariable Long id, @PathVariable Long channelId) {
+        return userService.subscribe(id, channelId);
+    }
+
+    @PostMapping("/users/{id}/unsubscribe/{channelId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User unsubscribe(@PathVariable Long id, @PathVariable Long channelId) {
+        return userService.unsubscribe(id, channelId);
+    }
+
     @PatchMapping("/users/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public User update(@PathVariable Long id, @RequestBody User user) {

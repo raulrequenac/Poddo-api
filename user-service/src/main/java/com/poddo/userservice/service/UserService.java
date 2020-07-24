@@ -63,4 +63,18 @@ public class UserService {
     public void remove(Long id) {
         userRepository.deleteById(id);
     }
+
+    public User subscribe(Long id, Long channelId) {
+        User user = findById(id);
+        user.subscribe(channelId);
+
+        return userRepository.save(user);
+    }
+
+    public User unsubscribe(Long id, Long channelId) {
+        User user = findById(id);
+        user.unsubscribe(channelId);
+
+        return userRepository.save(user);
+    }
 }

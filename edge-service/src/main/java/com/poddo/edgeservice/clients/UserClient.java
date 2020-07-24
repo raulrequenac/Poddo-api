@@ -29,6 +29,14 @@ public interface UserClient {
     @ResponseStatus(HttpStatus.CREATED)
     User createUser(@RequestBody User user);
 
+    @PostMapping("/users/{id}/subscribe/{channelId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    User subscribe(@PathVariable Long id, @PathVariable Long channelId);
+
+    @PostMapping("/users/{id}/unsubscribe/{channelId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    User unsubscribe(@PathVariable Long id, @PathVariable Long channelId);
+
     @PatchMapping("/users/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     User update(@PathVariable Long id, @RequestBody User user);

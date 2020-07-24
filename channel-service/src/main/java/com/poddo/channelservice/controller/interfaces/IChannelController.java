@@ -16,6 +16,8 @@ public interface IChannelController {
     Channel removePodcast(Long id, String podcastId);
     Channel addPlaylist(Long id, String playlistId);
     Channel removePlaylist(Long id, String playlistId);
+    Channel addSubscriber(Long id);
+    Channel removeSubscriber(Long id);
     void remove(Long id);
     Channel updateLogo(Long id, String file);
 }

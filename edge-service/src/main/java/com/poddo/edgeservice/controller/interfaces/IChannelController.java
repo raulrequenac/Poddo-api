@@ -1,6 +1,7 @@
 package com.poddo.edgeservice.controller.interfaces;
 
 import com.poddo.edgeservice.model.Playlist;
+import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,4 +16,6 @@ public interface IChannelController {
     ChannelView block(Long id);
     ChannelView unblock(Long id);
     ChannelView updateLogo(Long id, MultipartFile file);
+    ChannelView subscribe(Long id, User user);
+    ChannelView unsubscribe(Long id, User user);
 }

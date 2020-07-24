@@ -81,6 +81,14 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(user);
     }
 
+    public UserView subscribe(Long id, Long channelId) {
+        return convertToView(userClient.subscribe(id, channelId));
+    }
+
+    public UserView unsubscribe(Long id, Long channelId) {
+        return convertToView(userClient.unsubscribe(id, channelId));
+    }
+
     @HystrixCommand(fallbackMethod = "updateFallback")
     public UserView update(User auth, Long id, User user) {
         UserView u = findByUsername(auth.getUsername());

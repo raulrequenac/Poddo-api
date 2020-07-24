@@ -3,12 +3,14 @@ package com.poddo.edgeservice.controller.impl;
 import com.poddo.edgeservice.controller.interfaces.IChannelController;
 import com.poddo.edgeservice.model.Playlist;
 import com.poddo.edgeservice.model.Podcast;
+import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.service.ChannelService;
 import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,5 +61,17 @@ public class ChannelController implements IChannelController {
     @ResponseStatus(HttpStatus.OK)
     public ChannelView updateLogo(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         return channelService.updateLogo(id, file);
+    }
+
+    @PostMapping("/channels/{id}/subscribe")
+    @ResponseStatus(HttpStatus.OK)
+    public ChannelView subscribe(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        return channelService.subscribe(id, user);
+    }
+
+    @PostMapping("/channels/{id}/unsubscribe")
+    @ResponseStatus(HttpStatus.OK)
+    public ChannelView unsubscribe(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        return channelService.unsubscribe(id, user);
     }
 }

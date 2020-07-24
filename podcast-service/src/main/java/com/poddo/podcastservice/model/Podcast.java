@@ -112,7 +112,7 @@ public class Podcast {
         this.audio = audio;
     }
 
-    public boolean allowsComments() {
+    public boolean isAllowComments() {
         return allowComments;
     }
 

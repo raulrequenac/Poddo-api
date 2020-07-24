@@ -16,8 +16,7 @@ public class Channel {
     private String logo;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @ElementCollection
-    private List<Long> subscribers;
+    private Long subscribers;
     @ElementCollection
     private List<String> podcasts;
     @ElementCollection
@@ -30,7 +29,7 @@ public class Channel {
         this.id = id;
         this.name = name;
         this.status = Status.UNLOCKED;
-        this.subscribers = new ArrayList<>();
+        this.subscribers = (long) 0;
         this.podcasts = new ArrayList<>();
         this.playlists = new ArrayList<>();
     }
@@ -71,16 +70,16 @@ public class Channel {
         this.status = Status.UNLOCKED;
     }
 
-    public List<Long> getSubscribers() {
+    public Long getSubscribers() {
         return subscribers;
     }
 
-    public void addSubscriber(Long subscriber) {
-        this.subscribers.add(subscriber);
+    public void addSubscriber() {
+        this.subscribers++;
     }
 
-    public void removeSubscriber(Long subscriber) {
-        this.subscribers.remove(subscriber);
+    public void removeSubscriber() {
+        this.subscribers--;
     }
 
     public List<String> getPodcasts() {

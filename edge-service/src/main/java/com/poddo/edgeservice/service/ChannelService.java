@@ -5,11 +5,15 @@ import com.poddo.edgeservice.clients.ChannelClient;
 import com.poddo.edgeservice.exceptions.ChannelServiceException;
 import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Playlist;
+import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
+import com.poddo.edgeservice.viewModel.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,6 +95,34 @@ public class ChannelService {
     @HystrixCommand(fallbackMethod = "removeFallback")
     public void remove(Long id) {
         channelClient.remove(id);
+    }
+
+    public ChannelView subscribe(Long id, User user) {
+        UserView u = userService.isUser(user);
+
+        if (u==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (u.getId().equals(id)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (isSubscribed(u, id)) throw  new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        userService.subscribe(u.getId(), id);
+
+        return convertToView(channelClient.addSubscriber(u.getId()));
+    }
+
+    public ChannelView unsubscribe(Long id, User user) {
+        UserView u = userService.isUser(user);
+
+        if (u==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (u.getId().equals(id)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!isSubscribed(u, id)) throw  new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        userService.unsubscribe(u.getId(), id);
+
+        return convertToView(channelClient.removeSubscriber(u.getId()));
+    }
+
+    public boolean isSubscribed(UserView user, Long channelId) {
+        return user.getSubscriptions().stream().anyMatch(channel -> channel.getId().equals(channelId));
     }
 
     @HystrixCommand(fallbackMethod = "updateLogoFallback")

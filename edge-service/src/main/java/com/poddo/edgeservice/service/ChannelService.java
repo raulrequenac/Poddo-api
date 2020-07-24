@@ -38,7 +38,7 @@ public class ChannelService {
         return channelClient.findAll(name).stream().map(this::convertToView).collect(Collectors.toList());
     }
 
-    //@HystrixCommand(fallbackMethod = "findByIdFallback")
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
     public ChannelView findById(Long id) {
         return convertToView(channelClient.findById(id));
     }
@@ -99,6 +99,7 @@ public class ChannelService {
         channelClient.remove(id);
     }
 
+    @HystrixCommand(fallbackMethod = "subscribeFallback")
     public ChannelView subscribe(Long id, User user) {
         UserView u = userService.isUser(user);
 
@@ -111,6 +112,7 @@ public class ChannelService {
         return convertToView(channelClient.addSubscriber(u.getId()));
     }
 
+    @HystrixCommand(fallbackMethod = "unsubscribeFallback")
     public ChannelView unsubscribe(Long id, User user) {
         UserView u = userService.isUser(user);
 
@@ -127,7 +129,7 @@ public class ChannelService {
         return user.getSubscriptions().stream().anyMatch(channel -> channel.getId().equals(channelId));
     }
 
-    //@HystrixCommand(fallbackMethod = "updateLogoFallback")
+    @HystrixCommand(fallbackMethod = "updateLogoFallback")
     public ChannelView updateLogo(Long id, MultipartFile file) {
         String url = cloudinaryService.uploadFile(file, "image/jpeg");
 
@@ -194,6 +196,14 @@ public class ChannelService {
 
     public void removeFallback(Long id) {
         throw new ChannelServiceException("remove");
+    }
+
+    public ChannelView subscribeFallback(Long id, User user) {
+        throw new ChannelServiceException("subscribe");
+    }
+
+    public ChannelView unsubscribeFallback(Long id, User user) {
+        throw new ChannelServiceException("unsubscribe");
     }
 
     public ChannelView updateLogoFallback(Long id, MultipartFile file) {

@@ -50,12 +50,12 @@ public class UserService implements UserDetailsService, Serializable {
         return convertListToView(userClient.findAll(username));
     }
 
-    //@HystrixCommand(fallbackMethod = "findByIdFallback")
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
     public UserView findById(Long id) {
         return convertToView(userClient.findById(id));
     }
 
-    //@HystrixCommand(fallbackMethod = "findByUsernameFallback")
+    @HystrixCommand(fallbackMethod = "findByUsernameFallback")
     public UserView findByUsername(String username) {
         return convertToView(userClient.findByUsername(username));
     }
@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(userClient.createAdmin(user));
     }
 
-    //@HystrixCommand(fallbackMethod = "createUserFallback")
+    @HystrixCommand(fallbackMethod = "createUserFallback")
     public UserView createUser(ChannelUserDto channelUserDto) {
         User user = userClient.createUser(new User(channelUserDto.getUsername(), channelUserDto.getPassword(), Role.USER));
         channelService.create(new Channel(user.getId(), channelUserDto.getName()));
@@ -81,10 +81,12 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(user);
     }
 
+    @HystrixCommand(fallbackMethod = "subscribeFallback")
     public UserView subscribe(Long id, Long channelId) {
         return convertToView(userClient.subscribe(id, channelId));
     }
 
+    @HystrixCommand(fallbackMethod = "unsubscribeFallback")
     public UserView unsubscribe(Long id, Long channelId) {
         return convertToView(userClient.unsubscribe(id, channelId));
     }
@@ -152,6 +154,14 @@ public class UserService implements UserDetailsService, Serializable {
 
     public UserView updateFallback(User auth, Long id, User user) {
         throw new UserServiceException("update");
+    }
+
+    public UserView subscribeFallback(Long id, Long channelId) {
+        throw new UserServiceException("subscribe");
+    }
+
+    public UserView unsubscribeFallback(Long id, Long channelId) {
+        throw new UserServiceException("unsubscribe");
     }
 
     public void removeFallback(User auth, Long id) {

@@ -1,0 +1,8 @@
+com.poddo.commentservice
+com.poddo.commentservice.controller.impl
+com.poddo.commentservice.controller.interfaces
+com.poddo.commentservice.exceptions
+com.poddo.commentservice.globalHandler
+com.poddo.commentservice.model
+com.poddo.commentservice.repository
+com.poddo.commentservice.service

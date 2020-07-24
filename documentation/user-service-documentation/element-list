@@ -1,0 +1,9 @@
+com.poddo.userservice
+com.poddo.userservice.controller.impl
+com.poddo.userservice.controller.interfaces
+com.poddo.userservice.enums
+com.poddo.userservice.exceptions
+com.poddo.userservice.globalHandler
+com.poddo.userservice.model
+com.poddo.userservice.repository
+com.poddo.userservice.service

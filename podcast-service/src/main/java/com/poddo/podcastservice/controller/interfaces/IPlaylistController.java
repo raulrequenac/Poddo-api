@@ -10,4 +10,6 @@ public interface IPlaylistController {
     Playlist create(Playlist playlist);
     Playlist addPodcast(String id, String podcastId);
     Playlist removePodcast(String id, String podcastId);
+    Playlist update(String id, Playlist playlist);
+    void remove(String id);
 }

@@ -1,16 +1,12 @@
 package com.poddo.podcastservice.controller.impl;
 
 import com.poddo.podcastservice.controller.interfaces.IPodcastController;
-import com.poddo.podcastservice.dto.PodcastDto;
 import com.poddo.podcastservice.model.Podcast;
 import com.poddo.podcastservice.service.PodcastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,8 +37,8 @@ public class PodcastController implements IPodcastController {
 
     @PostMapping(value = "/podcasts")
     @ResponseStatus(HttpStatus.CREATED)
-    public Podcast create(@RequestBody PodcastDto podcastDto) {
-        return podcastService.create(podcastDto);
+    public Podcast create(@RequestBody Podcast podcast) {
+        return podcastService.create(podcast);
     }
 
     @PostMapping("/podcasts/{id}/update")
@@ -71,7 +67,7 @@ public class PodcastController implements IPodcastController {
 
     @PatchMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Podcast update(@PathVariable String id, @RequestBody PodcastDto podcast) {
+    public Podcast update(@PathVariable String id, @RequestBody Podcast podcast) {
         return podcastService.update(id, podcast);
     }
 

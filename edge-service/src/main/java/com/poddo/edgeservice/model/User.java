@@ -1,5 +1,9 @@
 package com.poddo.edgeservice.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.poddo.edgeservice.enums.Role;
 
 import javax.validation.constraints.NotNull;
@@ -16,6 +20,8 @@ public class User {
     @NotNull
     private Role role;
     private List<Long> subscriptions;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate createdAt;
 
     public User() {

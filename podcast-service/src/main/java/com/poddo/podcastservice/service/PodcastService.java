@@ -1,6 +1,5 @@
 package com.poddo.podcastservice.service;
 
-import com.poddo.podcastservice.dto.PodcastDto;
 import com.poddo.podcastservice.exceptions.IdNotFoundException;
 import com.poddo.podcastservice.model.Podcast;
 import com.poddo.podcastservice.repository.PodcastRepository;
@@ -31,7 +30,7 @@ public class PodcastService {
                 .orElseThrow(() -> new IdNotFoundException("Podcast with id "+id+" not found."));
     }
 
-    public Podcast create(PodcastDto podcastDto) {
+    public Podcast create(Podcast podcastDto) {
         Podcast podcast = new Podcast(
                 podcastDto.getTags(),
                 podcastDto.getTitle(),
@@ -72,7 +71,7 @@ public class PodcastService {
         return podcastRepository.save(podcast);
     }
 
-    public Podcast update(String id, PodcastDto podcastDto) {
+    public Podcast update(String id, Podcast podcastDto) {
         Podcast podcast = findById(id);
 
         if (podcastDto.getTitle()!=null) podcast.setTitle(podcastDto.getTitle());

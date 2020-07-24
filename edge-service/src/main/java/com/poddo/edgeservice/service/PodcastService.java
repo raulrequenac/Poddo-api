@@ -42,18 +42,18 @@ public class PodcastService {
         return convertListToView(podcasts);
     }
 
-    //@HystrixCommand(fallbackMethod = "findAllOrderByStarsDescFallback")
+    @HystrixCommand(fallbackMethod = "findAllOrderByStarsDescFallback")
     public List<PodcastView> findAllOrderByStarsDesc(String title, String tag) {
         List<Podcast> podcasts = podcastClient.findAllOrderByStarsDesc(title, tag);
         return convertListToView(podcasts);
     }
 
-    //@HystrixCommand(fallbackMethod = "findByIdFallback")
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
     public PodcastView findById(String id) {
         return convertToView(podcastClient.findPodcastById(id));
     }
 
-    //@HystrixCommand(fallbackMethod = "createFallback")
+    @HystrixCommand(fallbackMethod = "createFallback")
     public PodcastView create(User auth, PodcastDto podcastDto, String playlistId, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
         if (!channelId.equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);

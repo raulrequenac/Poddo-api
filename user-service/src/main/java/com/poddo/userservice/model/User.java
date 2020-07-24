@@ -1,5 +1,9 @@
 package com.poddo.userservice.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.poddo.userservice.enums.Role;
 
 import javax.persistence.*;
@@ -22,6 +26,8 @@ public class User {
     private Role role;
     @ElementCollection
     private List<Long> subscriptions;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate createdAt;
 
     public User() {

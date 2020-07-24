@@ -79,7 +79,7 @@ public class Channel {
     }
 
     public void removeSubscriber() {
-        this.subscribers--;
+        if (this.subscribers > 0) this.subscribers--;
     }
 
     public List<String> getPodcasts() {

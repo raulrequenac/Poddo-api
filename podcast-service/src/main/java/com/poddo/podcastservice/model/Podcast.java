@@ -1,7 +1,12 @@
 package com.poddo.podcastservice.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.poddo.podcastservice.enums.Status;
 import com.poddo.podcastservice.enums.Tags;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -9,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Podcast {
+    @Id
     private String id;
     @NotNull
     private Long stars;
@@ -24,6 +30,8 @@ public class Podcast {
     private String audio;
     @NotNull
     private boolean allowComments;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate creationDate;
     @NotNull
     private Long channelId;

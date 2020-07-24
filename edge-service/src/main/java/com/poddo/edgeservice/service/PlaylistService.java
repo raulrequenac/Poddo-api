@@ -29,12 +29,12 @@ public class PlaylistService {
         return podcastClient.findAllPlaylists();
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
     public Playlist findById(String id) {
         return podcastClient.findPlaylistById(id);
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "createFallback")
     public Playlist create(User auth, Playlist playlist, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
         if (!user.getChannel().getId().equals(channelId)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -45,7 +45,7 @@ public class PlaylistService {
         return pl;
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "addPodcastFallback")
     public Playlist addPodcast(User auth, String id, String podcastId, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
         if (!user.getChannel().getId().equals(channelId)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -53,7 +53,7 @@ public class PlaylistService {
         return podcastClient.addPodcastToPlaylist(id, podcastId);
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "removePodcastFallback")
     public Playlist removePodcast(User auth, String id, String podcastId, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
         if (!user.getChannel().getId().equals(channelId)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -61,7 +61,7 @@ public class PlaylistService {
         return podcastClient.removePodcastFromPlaylist(id, podcastId);
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "updateFallback")
     public Playlist update(User auth, String id, Playlist playlist) {
         UserView u = userService.findByUsername(auth.getUsername());
         if (!u.getChannel().getPlaylists().contains(findById(id)))
@@ -70,7 +70,7 @@ public class PlaylistService {
         return podcastClient.updatePlaylist(id, playlist);
     }
 
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "removeFallback")
     public void remove(User auth, String id) {
         UserView u = userService.findByUsername(auth.getUsername());
         ChannelView channel = u.getChannel();

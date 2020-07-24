@@ -8,6 +8,7 @@ class PodcastServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		PodcastServiceApplication.main(new String[] {});
 	}
 
 }

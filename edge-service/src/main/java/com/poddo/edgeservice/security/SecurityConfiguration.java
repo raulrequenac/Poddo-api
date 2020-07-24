@@ -40,7 +40,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/channels/{id}/block").hasAnyAuthority("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/channels/{id}/unblock").hasAnyAuthority("ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/channels/{id}/update").hasAnyAuthority("USER")
+                .mvcMatchers(HttpMethod.POST, "/channels/{id}/subscribe").hasAnyAuthority("USER")
+                .mvcMatchers(HttpMethod.POST, "/channels/{id}/unsubscribe").hasAnyAuthority("USER")
                 .mvcMatchers(HttpMethod.POST, "/users/admin").hasAnyAuthority("ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/comments/{id}").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().permitAll();
     }
 

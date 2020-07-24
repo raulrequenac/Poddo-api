@@ -1,5 +1,9 @@
 package com.poddo.edgeservice.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.poddo.edgeservice.enums.PodcastStatus;
 import com.poddo.edgeservice.enums.Tags;
 
@@ -24,6 +28,8 @@ public class Podcast {
     private String audio;
     @NotNull
     private boolean allowComments;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate creationDate;
     private Long channelId;
 

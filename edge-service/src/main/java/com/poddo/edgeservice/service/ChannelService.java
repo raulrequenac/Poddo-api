@@ -5,6 +5,7 @@ import com.poddo.edgeservice.clients.ChannelClient;
 import com.poddo.edgeservice.exceptions.ChannelServiceException;
 import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Playlist;
+import com.poddo.edgeservice.model.Podcast;
 import com.poddo.edgeservice.model.User;
 import com.poddo.edgeservice.viewModel.ChannelView;
 import com.poddo.edgeservice.viewModel.PodcastView;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,7 +127,7 @@ public class ChannelService {
         return user.getSubscriptions().stream().anyMatch(channel -> channel.getId().equals(channelId));
     }
 
-    @HystrixCommand(fallbackMethod = "updateLogoFallback")
+    //@HystrixCommand(fallbackMethod = "updateLogoFallback")
     public ChannelView updateLogo(Long id, MultipartFile file) {
         String url = cloudinaryService.uploadFile(file, "image/jpeg");
 
@@ -133,10 +135,15 @@ public class ChannelService {
     }
 
     public ChannelView convertToView(Channel channel) {
-        List<PodcastView> podcasts = channel.getPodcasts().stream().map(podcastId -> podcastService.findById(podcastId)).collect(Collectors.toList());
-        List<Playlist> playlists = channel.getPlaylists().stream().map(playlistId -> {
-            return playlistService.findById(playlistId);
-        }).collect(Collectors.toList());
+        List<String> podcastList =  channel.getPodcasts();
+        List<PodcastView> podcasts = podcastList.size()>0 ?
+                podcastList.stream().map(podcastId -> podcastService.findById(podcastId)).collect(Collectors.toList()) :
+                new ArrayList<>();
+
+        List<String> playlistList =  channel.getPlaylists();
+        List<Playlist> playlists = playlistList.size()>0 ?
+                playlistList.stream().map(playlistId -> playlistService.findById(playlistId)).collect(Collectors.toList()) :
+                new ArrayList<>();
 
         return new ChannelView(channel.getId(), channel.getName(), channel.getLogo(), channel.getStatus(), channel.getSubscribers(), podcasts, playlists);
     }

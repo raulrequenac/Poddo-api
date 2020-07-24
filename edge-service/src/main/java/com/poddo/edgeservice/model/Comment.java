@@ -1,6 +1,10 @@
 package com.poddo.edgeservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -14,6 +18,8 @@ public class Comment {
     @NotNull
     private String text;
     private Long stars;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate createdAt;
     private Comment responseTo;
     private List<Comment> responses;

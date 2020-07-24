@@ -8,6 +8,7 @@ class ChannelServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		ChannelServiceApplication.main(new String[] {});
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IPodcastController {
     List<Podcast> findAll();
-    List<Podcast> findAllOrderByStarsDesc(String title);
+    List<Podcast> findAllOrderByStarsDesc(String title, String tag);
     Podcast findById(String id);
     Podcast create(PodcastDto podcastDto);
     Podcast updatePodcastAudio(String id, String file);

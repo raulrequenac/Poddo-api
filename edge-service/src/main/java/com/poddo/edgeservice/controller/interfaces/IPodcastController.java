@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface IPodcastController {
     List<PodcastView> findAll();
-    List<PodcastView> findAllOrderByStarsDesc(String title);
+    List<PodcastView> findAllOrderByStarsDesc(String title, String tag);
     PodcastView findById(String id);
     PodcastView create(User auth, PodcastDto podcastDto, String playlistId, Long channelId);
     PodcastView star(String id);
-    PodcastView comment(String id, Long commentId, Comment comment);
+    PodcastView comment(String id, Comment comment);
     PodcastView uncomment(String id, Long commentId);
     PodcastView update(User auth, String id, PodcastDto podcast, Long channelId);
     void remove(User auth, String id, Long channelId);

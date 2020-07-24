@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService, Serializable {
         return convertListToView(userClient.findAll(username));
     }
 
-    @HystrixCommand(fallbackMethod = "findByIdFallback")
+    //@HystrixCommand(fallbackMethod = "findByIdFallback")
     public UserView findById(Long id) {
         return convertToView(userClient.findById(id));
     }
@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService, Serializable {
         return convertToView(userClient.createAdmin(user));
     }
 
-    //@HystrixCommand(fallbackMethod = "createUserFallback")
+    @HystrixCommand(fallbackMethod = "createUserFallback")
     public UserView createUser(ChannelUserDto channelUserDto) {
         User user = userClient.createUser(new User(channelUserDto.getUsername(), channelUserDto.getPassword(), Role.USER));
         channelService.create(new Channel(user.getId(), channelUserDto.getName()));

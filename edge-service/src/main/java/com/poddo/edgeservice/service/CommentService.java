@@ -13,6 +13,8 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentClient commentClient;
+    @Autowired
+    private UserService userService;
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public List<Comment> findAll() {

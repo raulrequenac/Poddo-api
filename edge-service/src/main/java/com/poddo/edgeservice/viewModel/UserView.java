@@ -1,7 +1,6 @@
 package com.poddo.edgeservice.viewModel;
 
 import com.poddo.edgeservice.enums.Role;
-import com.poddo.edgeservice.model.Channel;
 
 import java.time.LocalDate;
 import java.util.List;

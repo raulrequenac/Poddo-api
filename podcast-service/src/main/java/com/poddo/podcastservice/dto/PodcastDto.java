@@ -12,13 +12,15 @@ public class PodcastDto {
     private String description;
     private Status status;
     private Boolean allowComments;
+    private Long channelId;
 
-    public PodcastDto(List<Tags> tags, String title, String description, Status status, boolean allowComments) {
+    public PodcastDto(List<Tags> tags, String title, String description, Status status, boolean allowComments, Long channelId) {
         this.tags = tags;
         this.title = title;
         this.description = description;
         this.status = status;
         this.allowComments = allowComments;
+        this.channelId = channelId;
     }
 
     public List<Tags> getTags() {
@@ -59,5 +61,13 @@ public class PodcastDto {
 
     public void setAllowComments(boolean allowComments) {
         this.allowComments = allowComments;
+    }
+
+    public Long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Long channelId) {
+        this.channelId = channelId;
     }
 }

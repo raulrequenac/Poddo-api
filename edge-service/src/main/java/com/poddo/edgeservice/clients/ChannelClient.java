@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "channel-service")//, url = "https://channel-service-poddo.herokuapp.com")
+@FeignClient(name = "channel-service", url = "http://localhost:8084")
 public interface ChannelClient {
     @GetMapping("/channels")
     @ResponseStatus(HttpStatus.OK)

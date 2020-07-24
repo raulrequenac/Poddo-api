@@ -26,8 +26,11 @@ public class PodcastController implements IPodcastController {
 
     @GetMapping("/podcasts/stars") //?title=bar
     @ResponseStatus(HttpStatus.OK)
-    public List<Podcast> findAllOrderByStarsDesc(@RequestParam(value = "title", required = false) String title) {
-        return podcastService.findAllOrderByStarsDesc(title);
+    public List<Podcast> findAllOrderByStarsDesc(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "tag", required = false) String tag
+    ) {
+        return podcastService.findAllOrderByStarsDesc(title, tag);
     }
 
     @GetMapping("/podcasts/{id}")

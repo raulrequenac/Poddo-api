@@ -12,6 +12,9 @@ public class Playlist {
     private String description;
     private List<Podcast> podcasts;
 
+    public Playlist() {
+    }
+
     public Playlist(String title, String description) {
         this.title = title;
         this.description = description;

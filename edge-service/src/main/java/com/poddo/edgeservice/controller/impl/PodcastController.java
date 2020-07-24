@@ -29,8 +29,11 @@ public class PodcastController implements IPodcastController {
 
     @GetMapping("/podcasts/stars") //?title=bar
     @ResponseStatus(HttpStatus.OK)
-    public List<PodcastView> findAllOrderByStarsDesc(@RequestParam(value = "title", required = false) String title) {
-        return podcastService.findAllOrderByStarsDesc(title);
+    public List<PodcastView> findAllOrderByStarsDesc(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "tag", required = false) String tag
+    ) {
+        return podcastService.findAllOrderByStarsDesc(title, tag);
     }
 
     @GetMapping("/podcasts/{id}")
@@ -54,10 +57,10 @@ public class PodcastController implements IPodcastController {
         return podcastService.star(id);
     }
 
-    @PostMapping("/podcasts/{id}/comment/{commentId}")
+    @PostMapping("/podcasts/{id}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public PodcastView comment(@PathVariable String id, @PathVariable Long commentId, @RequestBody Comment comment) {
-        return podcastService.comment(id, commentId, comment);
+    public PodcastView comment(@PathVariable String id, @RequestBody Comment comment) {
+        return podcastService.comment(id, comment);
     }
 
     @PostMapping("/podcasts/{id}/uncomment/{commentId}")

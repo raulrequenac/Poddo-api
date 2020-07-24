@@ -32,7 +32,7 @@ public class ChannelService {
         return channelClient.findAll(name).stream().map(this::convertToView).collect(Collectors.toList());
     }
 
-    @HystrixCommand(fallbackMethod = "findByIdFallback")
+    //@HystrixCommand(fallbackMethod = "findByIdFallback")
     public ChannelView findById(Long id) {
         return convertToView(channelClient.findById(id));
     }
@@ -53,7 +53,7 @@ public class ChannelService {
                 .collect(Collectors.toList());
     }
 
-    //@HystrixCommand(fallbackMethod = "createFallback")
+    @HystrixCommand(fallbackMethod = "createFallback")
     public ChannelView create(Channel channel) {
         return convertToView(channelClient.create(channel));
     }
@@ -102,7 +102,9 @@ public class ChannelService {
 
     public ChannelView convertToView(Channel channel) {
         List<PodcastView> podcasts = channel.getPodcasts().stream().map(podcastId -> podcastService.findById(podcastId)).collect(Collectors.toList());
-        List<Playlist> playlists = channel.getPlaylists().stream().map(playlistId -> playlistService.findById(playlistId)).collect(Collectors.toList());
+        List<Playlist> playlists = channel.getPlaylists().stream().map(playlistId -> {
+            return playlistService.findById(playlistId);
+        }).collect(Collectors.toList());
 
         return new ChannelView(channel.getId(), channel.getName(), channel.getLogo(), channel.getStatus(), channel.getSubscribers(), podcasts, playlists);
     }

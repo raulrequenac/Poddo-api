@@ -9,8 +9,10 @@ import java.util.List;
 
 @Controller
 public interface PodcastRepository extends MongoRepository<Podcast, String> {
-    @Query("SELECT p FROM Podcast p WHERE p.title LIKE CONCAT('%',:title,'%') ORDER BY p.stars DESC")
-    List<Podcast> findByTitleLikeOrderByStarsDesc(String title);
-    @Query("SELECT p FROM Podcast p ORDER BY p.stars DESC")
+    @Query(sort = "{stars: -1}")
+    List<Podcast> findByTitleContainingOrderByStarsDesc(String title);
+    @Query(value = "{tags: { $all: [?0] }}", sort = "{stars: -1}")
+    List<Podcast> findByTagContainingOrderByStarsDesc(String tag);
+    @Query(value = "{}", sort = "{stars: -1}")
     List<Podcast> findAllOrderByStarsDesc();
 }

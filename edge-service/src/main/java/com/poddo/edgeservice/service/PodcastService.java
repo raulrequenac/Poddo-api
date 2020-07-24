@@ -5,7 +5,6 @@ import com.poddo.edgeservice.clients.PodcastClient;
 import com.poddo.edgeservice.dto.PodcastDto;
 import com.poddo.edgeservice.enums.Role;
 import com.poddo.edgeservice.exceptions.PodcastServiceException;
-import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Comment;
 import com.poddo.edgeservice.model.Podcast;
 import com.poddo.edgeservice.model.User;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,19 +42,18 @@ public class PodcastService {
         return convertListToView(podcasts);
     }
 
-    @HystrixCommand(fallbackMethod = "findAllOrderByStarsDescFallback")
-    public List<PodcastView> findAllOrderByStarsDesc(String title) {
-        List<Podcast> podcasts = podcastClient.findAllOrderByStarsDesc(title);
-
+    //@HystrixCommand(fallbackMethod = "findAllOrderByStarsDescFallback")
+    public List<PodcastView> findAllOrderByStarsDesc(String title, String tag) {
+        List<Podcast> podcasts = podcastClient.findAllOrderByStarsDesc(title, tag);
         return convertListToView(podcasts);
     }
 
-    @HystrixCommand(fallbackMethod = "findByIdFallback")
+    //@HystrixCommand(fallbackMethod = "findByIdFallback")
     public PodcastView findById(String id) {
         return convertToView(podcastClient.findPodcastById(id));
     }
 
-    @HystrixCommand(fallbackMethod = "createFallback")
+    //@HystrixCommand(fallbackMethod = "createFallback")
     public PodcastView create(User auth, PodcastDto podcastDto, String playlistId, Long channelId) {
         UserView user = userService.findByUsername(auth.getUsername());
         if (!channelId.equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -74,10 +71,10 @@ public class PodcastService {
         return convertToView(podcastClient.starPodcast(id));
     }
 
-    @HystrixCommand(fallbackMethod = "commentFallback")
-    public PodcastView comment(String id, Long commentId, Comment comment) {
-        commentService.create(comment);
-        return convertToView(podcastClient.commentPodcast(id, commentId));
+    //@HystrixCommand(fallbackMethod = "commentFallback")
+    public PodcastView comment(String id, Comment comment) {
+        Comment c = commentService.create(comment);
+        return convertToView(podcastClient.commentPodcast(id, c.getId()));
     }
 
     @HystrixCommand(fallbackMethod = "uncommentFallback")
@@ -140,7 +137,8 @@ public class PodcastService {
                 podcast.getStatus(),
                 podcast.getAudio(),
                 podcast.getAllowComments(),
-                podcast.getCreationDate()
+                podcast.getCreationDate(),
+                podcast.getChannelId()
         );
     }
 
@@ -152,7 +150,7 @@ public class PodcastService {
         throw new PodcastServiceException("findAll");
     }
 
-    public List<PodcastView> findAllOrderByStarsDescFallback(String title) {
+    public List<PodcastView> findAllOrderByStarsDescFallback(String title, String tag) {
         throw new PodcastServiceException("findAllOrderByStarsDesc");
     }
 
@@ -168,7 +166,7 @@ public class PodcastService {
         throw new PodcastServiceException("star");
     }
 
-    public PodcastView commentFallback(String id, Long commentId, Comment comment) {
+    public PodcastView commentFallback(String id, Comment comment) {
         throw new PodcastServiceException("comment");
     }
 

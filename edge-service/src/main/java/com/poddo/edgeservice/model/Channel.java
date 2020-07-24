@@ -17,6 +17,9 @@ public class Channel {
     private List<String> podcasts;
     private List<String> playlists;
 
+    public Channel() {
+    }
+
     public Channel(Long id, String name) {
         this.id = id;
         this.name = name;

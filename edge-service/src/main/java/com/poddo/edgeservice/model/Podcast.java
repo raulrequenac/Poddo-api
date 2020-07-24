@@ -23,10 +23,14 @@ public class Podcast {
     @NotNull
     private String audio;
     @NotNull
-    private Boolean allowComments;
+    private boolean allowComments;
     private LocalDate creationDate;
+    private Long channelId;
 
-    public Podcast(List<Tags> tags, String title, String description, PodcastStatus status, String audio, boolean allowComments) {
+    public Podcast() {
+    }
+
+    public Podcast(List<Tags> tags, String title, String description, PodcastStatus status, String audio, boolean allowComments, Long channelId) {
         this.tags = tags;
         this.title = title;
         this.description = description;
@@ -36,6 +40,7 @@ public class Podcast {
         this.comments = new ArrayList<>();
         this.stars = (long) 0;
         this.creationDate = LocalDate.now();
+        this.channelId = channelId;
     }
 
     public String getId() {
@@ -102,11 +107,11 @@ public class Podcast {
         this.audio = audio;
     }
 
-    public Boolean getAllowComments() {
+    public boolean getAllowComments() {
         return allowComments;
     }
 
-    public void setAllowComments(Boolean allowComments) {
+    public void setAllowComments(boolean allowComments) {
         this.allowComments = allowComments;
     }
 
@@ -116,5 +121,13 @@ public class Podcast {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Long channelId) {
+        this.channelId = channelId;
     }
 }

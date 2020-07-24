@@ -3,7 +3,7 @@ package com.poddo.edgeservice.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +14,19 @@ public class Comment {
     @NotNull
     private String text;
     private Long stars;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private Comment responseTo;
     private List<Comment> responses;
+
+    public Comment() {
+    }
 
     public Comment(Long userId, String text, Comment responseTo) {
         this.userId = userId;
         this.text = text;
         this.stars = (long) 0;
         this.responseTo = responseTo;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDate.now();
         this.responses = null;
     }
 
@@ -32,7 +35,7 @@ public class Comment {
         this.text = text;
         this.stars = (long) 0;
         this.responseTo = null;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDate.now();
         this.responses = new ArrayList<>();
     }
 
@@ -68,11 +71,11 @@ public class Comment {
         this.stars = stars;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 

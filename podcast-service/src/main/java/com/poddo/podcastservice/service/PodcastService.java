@@ -18,10 +18,12 @@ public class PodcastService {
         return podcastRepository.findAll();
     }
 
-    public List<Podcast> findAllOrderByStarsDesc(String title) {
+    public List<Podcast> findAllOrderByStarsDesc(String title, String tag) {
         return title==null ?
-                podcastRepository.findAllOrderByStarsDesc() :
-                podcastRepository.findByTitleLikeOrderByStarsDesc(title);
+                tag==null ?
+                        podcastRepository.findAllOrderByStarsDesc() :
+                        podcastRepository.findByTagContainingOrderByStarsDesc(tag) :
+                podcastRepository.findByTitleContainingOrderByStarsDesc(title);
     }
 
     public Podcast findById(String id) {
@@ -30,8 +32,14 @@ public class PodcastService {
     }
 
     public Podcast create(PodcastDto podcastDto) {
-
-        Podcast podcast = new Podcast(podcastDto.getTags(), podcastDto.getTitle(), podcastDto.getDescription(), podcastDto.getStatus(), podcastDto.allowsComments());
+        Podcast podcast = new Podcast(
+                podcastDto.getTags(),
+                podcastDto.getTitle(),
+                podcastDto.getDescription(),
+                podcastDto.getStatus(),
+                podcastDto.allowsComments(),
+                podcastDto.getChannelId()
+        );
 
         return podcastRepository.save(podcast);
     }
@@ -71,7 +79,7 @@ public class PodcastService {
         if (podcastDto.getTags()!=null)  podcast.setTags(podcastDto.getTags());
         if (podcastDto.getDescription()!=null) podcast.setDescription(podcastDto.getDescription());
         if (podcastDto.getStatus()!=null) podcast.setStatus(podcastDto.getStatus());
-        if (podcastDto.allowsComments()!=null) podcast.setStatus(podcastDto.getStatus());
+        if (podcastDto.allowsComments()!=null) podcast.setAllowComments(podcastDto.allowsComments());
 
         return podcastRepository.save(podcast);
     }

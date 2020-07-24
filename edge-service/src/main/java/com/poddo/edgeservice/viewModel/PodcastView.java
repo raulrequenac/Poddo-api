@@ -2,6 +2,7 @@ package com.poddo.edgeservice.viewModel;
 
 import com.poddo.edgeservice.enums.PodcastStatus;
 import com.poddo.edgeservice.enums.Tags;
+import com.poddo.edgeservice.model.Channel;
 import com.poddo.edgeservice.model.Comment;
 
 import javax.validation.constraints.NotNull;
@@ -19,8 +20,9 @@ public class PodcastView {
     private String audio;
     private Boolean allowComments;
     private LocalDate creationDate;
+    private Long channelId;
 
-    public PodcastView(String id, Long stars, List<Tags> tags, String title, String description, List<Comment> comments, PodcastStatus status, String audio, Boolean allowComments, LocalDate creationDate) {
+    public PodcastView(String id, Long stars, List<Tags> tags, String title, String description, List<Comment> comments, PodcastStatus status, String audio, Boolean allowComments, LocalDate creationDate, Long channelId) {
         this.id = id;
         this.stars = stars;
         this.tags = tags;
@@ -31,6 +33,7 @@ public class PodcastView {
         this.audio = audio;
         this.allowComments = allowComments;
         this.creationDate = creationDate;
+        this.channelId = channelId;
     }
 
     public String getId() {
@@ -111,5 +114,13 @@ public class PodcastView {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Long channelId) {
+        this.channelId = channelId;
     }
 }

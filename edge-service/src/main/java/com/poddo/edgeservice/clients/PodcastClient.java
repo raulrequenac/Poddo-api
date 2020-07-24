@@ -19,7 +19,10 @@ public interface PodcastClient {
 
     @GetMapping("/podcasts/stars") //?title=bar
     @ResponseStatus(HttpStatus.OK)
-    List<Podcast> findAllOrderByStarsDesc(@RequestParam(value = "title", required = false) String title);
+    List<Podcast> findAllOrderByStarsDesc(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "tag", required = false) String tag
+    );
 
     @GetMapping("/podcasts/{id}")
     @ResponseStatus(HttpStatus.OK)
